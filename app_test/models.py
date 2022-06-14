@@ -1,6 +1,37 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+
+from app_test.validator import contact_number_validator
+
+
+def get_profile_pictures_directory(self: 'TestMember', filename):
+    return f'img/pp/{self.username}'
+
 
 class TestMember(User):
+    # username
+
+    # first_name
+
+    # last_name
+
+    # email
+
+    # password
+
+    # is_staff
+
     organization = models.CharField(max_length=255, null=False)
-    
+
+    contact_number = models.CharField(
+        max_length=11,
+        null=False,
+        validators=[contact_number_validator]
+    )
+
+    profile_picture = models.ImageField(
+        upload_to=get_profile_pictures_directory, null=False, blank=False)
+
+    is_dean = models.BooleanField(default=False, null=False)
+
+    is_teacher = models.BooleanField(default=False, null=False)
