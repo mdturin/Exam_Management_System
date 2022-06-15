@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -35,3 +36,37 @@ class TestMember(User):
     is_dean = models.BooleanField(default=False, null=False)
 
     is_teacher = models.BooleanField(default=False, null=False)
+
+
+class TestDepartment(models.Model):
+    name = models.CharField(max_length=255, null=False)
+
+
+class TestCourse(models.Model):
+
+    LEVEL_CHOICES = [
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+    ]
+
+    SEMESTER_CHOICES = [
+        ('I', 'I'),
+        ('II', 'II'),
+    ]
+
+    name = models.CharField(max_length=255, null=False)
+
+    credits = models.FloatField(null=False)
+
+    code = models.CharField(max_length=255, null=False)
+
+    level = models.CharField(max_length=1, null=False,
+                             choices=LEVEL_CHOICES, default='1')
+
+    semester = models.CharField(
+        max_length=2, null=False, choices=SEMESTER_CHOICES, default='I')
+
+    department = models.OneToOneField(
+        TestDepartment, on_delete=models.CASCADE, null=False)
