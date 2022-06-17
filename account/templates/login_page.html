@@ -19,7 +19,7 @@
   </head>
   <body>
     <!-- Sing in  Form -->
-    <section class="sign-in display-flex-center">
+    <section class="sign-in">
       <div class="container position-center">
         <div class="signin-content">
           <div class="signin-image">
@@ -35,6 +35,7 @@
           <div class="signin-form">
             <h2 class="form-title">Sign In</h2>
             <form method="POST" class="register-form" id="login-form">
+              {% csrf_token %}
               <div class="form-group">
                 <label for="email"
                   ><i class="zmdi zmdi-account material-icons-name"></i
@@ -58,11 +59,11 @@
               <div class="form-group">
                 <input
                   type="checkbox"
-                  name="remember-me"
-                  id="remember-me"
+                  name="remember_me"
+                  id="remember_me"
                   class="agree-term"
                 />
-                <label for="remember-me" class="label-agree-term"
+                <label for="remember_me" class="label-agree-term"
                   ><span><span></span></span>Remember me</label
                 >
               </div>
