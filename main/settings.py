@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'account',
     'app_test',
 
+    'widget_tweaks',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

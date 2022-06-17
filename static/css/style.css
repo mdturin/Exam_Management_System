@@ -34,6 +34,7 @@ list-type-ulli,
     url("../fonts/poppins/poppins-v5-latin-300.svg#Poppins") format("svg");
   /* Legacy iOS */
 }
+
 /* poppins-300italic - latin */
 @font-face {
   font-family: "Poppins";
@@ -454,6 +455,7 @@ figure {
   margin-bottom: 25px;
   overflow: hidden;
 }
+
 .form-group:last-child {
   margin-bottom: 0px;
 }
@@ -598,6 +600,7 @@ label.valid {
   height: 20px;
   background: transparent;
 }
+
 label.valid:after {
   font-family: "Material-Design-Iconic-Font";
   content: "\f269";
@@ -710,11 +713,13 @@ label.valid:after {
     max-width: 100%;
   }
 }
+
 @media screen and (min-width: 1024px) {
   .container {
     max-width: 1200px;
   }
 }
+
 @media screen and (max-width: 768px) {
   .signup-content,
   .signin-content {
@@ -783,6 +788,7 @@ label.valid:after {
     text-align: center;
   }
 }
+
 @media screen and (max-width: 400px) {
   .social-login {
     flex-direction: column;
@@ -798,4 +804,4 @@ label.valid:after {
   }
 }
 
-/*# sourceMappingURL=style.css.map */
+/* # sourceMappingURL=style.css.map */

@@ -1,0 +1,79 @@
+{% load widget_tweaks %}
+
+<form action="" method="POST">
+  {% csrf_token %}
+
+  <!-- First Name -->
+  <div class="form-group">
+    <label for="first_name"
+      ><i class="zmdi zmdi-account material-icons-name"></i
+    ></label>
+    {% render_field form.first_name class='form-control' placeholder='First Name' %}
+  </div>
+
+  <!-- Last Name -->
+  <div class="form-group">
+    <label for="last_name"
+      ><i class="zmdi zmdi-account material-icons-name"></i
+    ></label>
+    {% render_field form.last_name class='form-control' placeholder='Last Name' %}
+  </div>
+
+  <!-- Is Dean / Teacher / Staff -->
+  <div class="form-group">
+    <div>
+      <input type="checkbox" name="is_dean" id="is_dean" class="agree-term" />
+      <label for="is_dean" class="label-agree-term"
+        ><span><span></span></span>Dean</label
+      >
+    </div>
+
+    <div>
+      <input
+        type="checkbox"
+        name="is_teacher"
+        id="is_teacher"
+        class="agree-term"
+      />
+      <label for="is_teacher" class="label-agree-term"
+        ><span><span></span></span>Teacher</label
+      >
+    </div>
+
+    <div>
+      <input type="checkbox" name="is_staff" id="is_staff" class="agree-term" />
+      <label for="is_staff" class="label-agree-term"
+        ><span><span></span></span>Staff</label
+      >
+    </div>
+  </div>
+
+  <!-- Email -->
+  <div class="form-group">
+    <label for="email"><i class="zmdi zmdi-email"></i></label>
+    {% render_field form.email class='form-control' placeholder='Email' %}
+  </div>
+
+  <!-- Username -->
+  <div class="form-group">
+    <label for="username"><i class="zmdi zmdi-accounts-alt"></i></label>
+    {% render_field form.username class='form-control' placeholder='Username' %}
+  </div>
+
+  <!-- Password -->
+  <div class="form-group">
+    <label for="password"><i class="zmdi zmdi-lock"></i></label>
+    {% render_field form.password class='form-control' placeholder='Password' %}
+  </div>
+
+  <!-- Register Button -->
+  <div class="form-group form-button">
+    <input
+      type="submit"
+      name="signup"
+      id="signup"
+      class="form-submit"
+      value="Register"
+    />
+  </div>
+</form>

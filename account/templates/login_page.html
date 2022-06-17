@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %} {% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,7 +20,7 @@
   <body>
     <!-- Sing in  Form -->
     <section class="sign-in">
-      <div class="container position-center">
+      <div class="container">
         <div class="signin-content">
           <div class="signin-image">
             <figure>
@@ -29,11 +29,13 @@
                 alt="sing up image"
               />
             </figure>
-            <a href="#" class="signup-image-link">Create an account</a>
+            <a href="{% url 'register-page' %}" class="signup-image-link"
+              >Create an account</a
+            >
           </div>
 
           <div class="signin-form">
-            <h2 class="form-title">Sign In</h2>
+            <h2 class="form-title">Sign up</h2>
             <form method="POST" class="register-form" id="login-form">
               {% csrf_token %}
               <div class="form-group">
@@ -44,7 +46,7 @@
                   type="text"
                   name="email"
                   id="email"
-                  placeholder="Your Email"
+                  placeholder="Your Name"
                 />
               </div>
               <div class="form-group">
