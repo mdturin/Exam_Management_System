@@ -77,6 +77,8 @@ class Course(models.Model):
     semester = models.CharField(
         max_length=2, null=False, choices=SEMESTER_CHOICES, default='I')
 
+    is_sessional = models.BooleanField(null=False, default=False)
+
     department = models.OneToOneField(
         Department, on_delete=models.CASCADE, null=False)
 
