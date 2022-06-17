@@ -9,6 +9,7 @@ def get_profile_pictures_directory(self: 'TestMember', filename):
 
 
 class TestMember(User):
+
     # username
 
     # first_name
