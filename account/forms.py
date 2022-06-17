@@ -1,8 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 
 from account.choices import *
 from account.models import *
+from account.validator import *
 
 
 class MemberLoginForm(forms.Form):
@@ -15,7 +15,6 @@ class MemberLoginForm(forms.Form):
 
 
 class MemberRegisterForm(forms.ModelForm):
-
     class Meta:
         model = Member
         fields = [
@@ -27,6 +26,10 @@ class MemberRegisterForm(forms.ModelForm):
             'is_dean',
             'is_teacher',
             'is_staff',
+            'organization',
+            # 'title',
+            'contact_number',
+
         ]
 
         widgets = {
