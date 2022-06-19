@@ -1,19 +1,18 @@
 from django import forms
+from django.contrib.auth.models import User
+
 from account.choices import *
 from account.models import *
 from account.validator import *
 
 
-class MemberLoginForm(forms.Form):
-
-    email = forms.EmailField(required=True)
-
-    password = forms.CharField(required=True)
-
-    remember_me = forms.BooleanField(required=False, initial=False)
+class LoginForm(forms.Form):
+    email = forms.EmailField()
+    password = forms.PasswordInput()
+    remember_me = forms.BooleanField()
 
 
-class MemberRegisterForm(forms.ModelForm):
+class UserRegistraionForm(forms.ModelForm):
 
     first_name = forms.CharField(required=True)
 
@@ -21,27 +20,36 @@ class MemberRegisterForm(forms.ModelForm):
 
     email = forms.EmailField(required=True)
 
+    class Meta:
+        model = User
+        fields = [
+            'first_name',
+            'last_name',
+            'is_staff',
+            'email',
+            'password'
+        ]
+        widgets = {
+            'password': forms.PasswordInput()
+        }
+
+
+class MemberRegisterForm(forms.ModelForm):
+
     contact_number = forms.CharField(
-        required=True, max_length=11, min_length=11, strip=True, validators=[contact_number_validator])
+        required=True, max_length=11, min_length=11, strip=True,
+        validators=[contact_number_validator])
 
     class Meta:
         model = Member
         fields = [
-            'email',
-            'first_name',
-            'last_name',
-            'password',
             'is_dean',
             'is_teacher',
-            'is_staff',
             'title',
             'contact_number',
+            'profile_picture',
         ]
 
         widgets = {
-            'is_dean': forms.CheckboxInput(),
-            'is_teacher': forms.CheckboxInput(),
-            'is_staff': forms.CheckboxInput(),
             'title': forms.Select(choices=TEACHER_TITLE_CHOICES),
-            'password': forms.PasswordInput(),
         }

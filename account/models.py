@@ -1,22 +1,17 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 from account.choices import *
 from account.validator import contact_number_validator
 
 
 def get_profile_pictures_directory(self: 'Member', filename: str):
-    return f'img/pp/{self.username}'
+    return f'img/pp/{self.user.id}_{filename}'
 
 
 class Member(models.Model):
 
-    first_name = models.CharField(max_length=255, null=False)
-
-    last_name = models.CharField(max_length=255, null=False)
-
-    password = models.CharField(max_length=31, null=False)
-
-    email = models.EmailField(max_length=255, null=False, unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     title = models.CharField(max_length=255, null=False,
                              choices=TEACHER_TITLE_CHOICES, default='None')
@@ -27,57 +22,63 @@ class Member(models.Model):
     )
 
     profile_picture = models.ImageField(
-        upload_to=get_profile_pictures_directory, null=False, blank=False)
+        upload_to=get_profile_pictures_directory, blank=True, null=True)
 
     is_dean = models.BooleanField(default=False, null=False)
 
     is_teacher = models.BooleanField(default=False, null=False)
 
-    is_staff = models.BooleanField(default=False, null=False)
-
     def __str__(self) -> str:
-        return self.email
+        return self.user.email
+
+    @property
+    def get_instance(self):
+        return self
+
+    @property
+    def get_name(self):
+        return self.user.first_name + " " + self.user.last_name
 
 
-class Faculty(models.Model):
-    name = models.CharField(max_length=255, null=False)
+# class Faculty(models.Model):
+#     name = models.CharField(max_length=255, null=False)
 
-    short_name = models.CharField(max_length=255, null=False)
+#     short_name = models.CharField(max_length=255, null=False)
 
-    def __str__(self) -> str:
-        return self.name + f" ({self.short_name})"
-
-
-class Department(models.Model):
-    name = models.CharField(max_length=255, null=False)
-
-    short_name = models.CharField(max_length=255, null=False)
-
-    facutly = models.OneToOneField(
-        Faculty, on_delete=models.PROTECT, null=False)
-
-    def __str__(self) -> str:
-        return self.name + f" ({self.short_name})"
+#     def __str__(self) -> str:
+#         return self.name + f" ({self.short_name})"
 
 
-class Course(models.Model):
+# class Department(models.Model):
+#     name = models.CharField(max_length=255, null=False)
 
-    name = models.CharField(max_length=255, null=False)
+#     short_name = models.CharField(max_length=255, null=False)
 
-    credits = models.FloatField(null=False)
+#     facutly = models.OneToOneField(
+#         Faculty, on_delete=models.PROTECT, null=False)
 
-    code = models.CharField(max_length=255, null=False)
+#     def __str__(self) -> str:
+#         return self.name + f" ({self.short_name})"
 
-    level = models.CharField(max_length=1, null=False,
-                             choices=LEVEL_CHOICES, default='1')
 
-    semester = models.CharField(
-        max_length=2, null=False, choices=SEMESTER_CHOICES, default='I')
+# class Course(models.Model):
 
-    is_sessional = models.BooleanField(null=False, default=False)
+#     name = models.CharField(max_length=255, null=False)
 
-    department = models.OneToOneField(
-        Department, on_delete=models.CASCADE, null=False)
+#     credits = models.FloatField(null=False)
 
-    def __str__(self) -> str:
-        return self.name + f" ({self.code})"
+#     code = models.CharField(max_length=255, null=False)
+
+#     level = models.CharField(max_length=1, null=False,
+#                              choices=LEVEL_CHOICES, default='1')
+
+#     semester = models.CharField(
+#         max_length=2, null=False, choices=SEMESTER_CHOICES, default='I')
+
+#     is_sessional = models.BooleanField(null=False, default=False)
+
+#     department = models.OneToOneField(
+#         Department, on_delete=models.CASCADE, null=False)
+
+#     def __str__(self) -> str:
+#         return self.name + f" ({self.code})"
