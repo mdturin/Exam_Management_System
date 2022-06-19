@@ -1,4 +1,3 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from account.choices import *
@@ -9,15 +8,13 @@ def get_profile_pictures_directory(self: 'Member', filename: str):
     return f'img/pp/{self.username}'
 
 
-class Member(AbstractUser):
+class Member(models.Model):
 
-    # first_name
+    first_name = models.CharField(max_length=255, null=False)
 
-    # last_name
+    last_name = models.CharField(max_length=255, null=False)
 
-    # password
-
-    # is_staff
+    password = models.CharField(max_length=31, null=False)
 
     email = models.EmailField(max_length=255, null=False, unique=True)
 
@@ -25,9 +22,8 @@ class Member(AbstractUser):
                              choices=TEACHER_TITLE_CHOICES, default='None')
 
     contact_number = models.CharField(
-        max_length=11,
-        null=False,
-        validators=[contact_number_validator]
+        null=False, unique=True, max_length=11,
+        validators=[contact_number_validator],
     )
 
     profile_picture = models.ImageField(
@@ -36,6 +32,8 @@ class Member(AbstractUser):
     is_dean = models.BooleanField(default=False, null=False)
 
     is_teacher = models.BooleanField(default=False, null=False)
+
+    is_staff = models.BooleanField(default=False, null=False)
 
     def __str__(self) -> str:
         return self.email

@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from account.forms import *
 from account.models import *
 
@@ -18,12 +18,13 @@ def login_page(request):
 
 def register_page(request):
     memberForm = MemberRegisterForm()
-    formErrors = ''
+    formErrors = {}
 
     if request.method == 'POST':
         memberForm = MemberRegisterForm(request.POST)
         if memberForm.is_valid():
-            print(memberForm.cleaned_data)
+            memberForm.save()
+            return redirect('login-page')
         else:
             print("Member Form isn't valid")
             formErrors = memberForm.errors.as_json()
