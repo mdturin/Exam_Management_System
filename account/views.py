@@ -18,11 +18,18 @@ def login_page(request):
 
 def register_page(request):
     memberForm = MemberRegisterForm()
+    formErrors = ''
+
     if request.method == 'POST':
         memberForm = MemberRegisterForm(request.POST)
         if memberForm.is_valid():
             print(memberForm.cleaned_data)
-            pass
         else:
             print("Member Form isn't valid")
-    return render(request, 'register_page.html', {'form': memberForm})
+            formErrors = memberForm.errors.as_json()
+            print(formErrors)
+
+    return render(request, 'register_page.html', {
+        'form': memberForm,
+        'errors': formErrors
+    })

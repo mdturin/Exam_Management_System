@@ -11,8 +11,10 @@ SEMESTER_CHOICES = [
 ]
 
 TEACHER_TITLE_CHOICES = [
+    ('', ''),
     ('Professor', 'Professor'),
     ('Associate Professor', 'Associate Professor'),
     ('Assistant Professor', 'Assistant Professor'),
     ('Lecturer', 'Lecturer'),
+    ('None', 'None'),
 ]

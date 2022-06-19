@@ -1,3 +1,4 @@
+{% load static %}
 {% load widget_tweaks %}
 
 <form action="" method="POST">
@@ -22,7 +23,7 @@
   <!-- Is Dean / Teacher / Staff -->
   <div class="form-group">
     <div>
-      <input type="checkbox" name="is_dean" id="is_dean" class="agree-term" />
+      <input type="checkbox" name="is_dean" id="is_dean" class="agree-term"/>
       <label for="is_dean" class="label-agree-term"
         ><span><span></span></span>Dean</label
       >
@@ -49,15 +50,10 @@
   </div>
 
   <!-- Email -->
+  <p style="color:red;"> </p>
   <div class="form-group">
     <label for="email"><i class="zmdi zmdi-email"></i></label>
     {% render_field form.email class='form-control' placeholder='Email' %}
-  </div>
-
-  <!-- Username -->
-  <div class="form-group">
-    <label for="username"><i class="zmdi zmdi-accounts-alt"></i></label>
-    {% render_field form.username class='form-control' placeholder='Username' %}
   </div>
 
   <!-- Password -->
@@ -66,17 +62,17 @@
     {% render_field form.password class='form-control' placeholder='Password' %}
   </div>
 
-  <!-- Organization -->
-  <div class="form-group">
-    <label for="organization"><i class="zmdi zmdi-grid"></i></label>
-    {% render_field form.organization class='form-control' placeholder='Organization' %}
-  </div>
-
   <!-- Title -->
+  <div class="">
+    <div class="custom-select">
+      {% render_field form.title %}
+    </div>
+  </div>
 
   <!-- Contact Number -->
   <div class="form-group">
-    <label for="contact_number"><i class="zmdi zmdi-phone"></i></label>
+    <label for="contact_number"><i class="zmdi zmdi-phone"></i>
+    </label>
     {% render_field form.contact_number class='form-control' placeholder='Phone Number' %}
   </div>
 

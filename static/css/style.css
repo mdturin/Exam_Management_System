@@ -377,6 +377,7 @@ body {
 
 .signup-content {
   padding: 75px 0;
+  overflow: visible;
 }
 
 .signup-form,
@@ -384,7 +385,7 @@ body {
 .signin-form,
 .signin-image {
   width: 50%;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .signup-image {
@@ -444,6 +445,7 @@ figure {
   margin-left: 75px;
   margin-right: 75px;
   padding-left: 34px;
+  overflow: visible !important;
 }
 
 .register-form {
@@ -741,6 +743,7 @@ label.valid:after {
     padding-left: 0px;
     /* box-sizing: border-box; */
     padding: 0 30px;
+    overflow: visible;
   }
 
   .signin-image {
@@ -759,6 +762,7 @@ label.valid:after {
   .signin-form,
   .signin-image {
     width: auto;
+    overflow: visible;
   }
 
   .social-login {
