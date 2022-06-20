@@ -1,9 +1,16 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from account.choices import *
 from account.models import *
-from account.validator import *
+
+TEACHER_TITLE_CHOICES = [
+    ('', ''),
+    ('Professor', 'Professor'),
+    ('Associate Professor', 'Associate Professor'),
+    ('Assistant Professor', 'Assistant Professor'),
+    ('Lecturer', 'Lecturer'),
+    ('None', 'None'),
+]
 
 
 class LoginForm(forms.Form):
@@ -37,8 +44,7 @@ class UserRegistraionForm(forms.ModelForm):
 class MemberRegisterForm(forms.ModelForm):
 
     contact_number = forms.CharField(
-        required=True, max_length=11, min_length=11, strip=True,
-        validators=[contact_number_validator])
+        required=True, max_length=11, min_length=11, strip=True)
 
     class Meta:
         model = Member
