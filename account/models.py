@@ -1,8 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from account.choices import *
-from account.validator import contact_number_validator
+LEVEL_CHOICES = [
+    ('1', '1'),
+    ('2', '2'),
+    ('3', '3'),
+    ('4', '4'),
+]
+
+SEMESTER_CHOICES = [
+    ('I', 'I'),
+    ('II', 'II'),
+]
+
+TEACHER_TITLE_CHOICES = [
+    ('', ''),
+    ('Professor', 'Professor'),
+    ('Associate Professor', 'Associate Professor'),
+    ('Assistant Professor', 'Assistant Professor'),
+    ('Lecturer', 'Lecturer'),
+    ('None', 'None'),
+]
 
 
 def get_profile_pictures_directory(self: 'Member', filename: str):
@@ -16,10 +34,7 @@ class Member(models.Model):
     title = models.CharField(max_length=255, null=False,
                              choices=TEACHER_TITLE_CHOICES, default='None')
 
-    contact_number = models.CharField(
-        null=False, unique=True, max_length=11,
-        validators=[contact_number_validator],
-    )
+    contact_number = models.CharField(null=False, unique=True, max_length=11)
 
     profile_picture = models.ImageField(
         upload_to=get_profile_pictures_directory, blank=True, null=True)
