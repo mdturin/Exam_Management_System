@@ -1,0 +1,36 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Login</title>
+
+    <!-- Font Icon -->
+    <link
+      rel="stylesheet"
+      href="{% static 'fonts/material-icon/css/material-design-iconic-font.min.css' %}"
+    />
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/register_page.css' %}">
+  </head>
+  <body>
+    <!-- Sign up form -->
+    <section class="signup">
+      <div class="container">
+        <div class="signup-content">
+          <!-- Block Content -->
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+    </section>
+
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'js/register_page.js' %}"></script>
+  </body>
+</html>

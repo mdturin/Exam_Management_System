@@ -4,95 +4,11 @@
 <form action="" method="POST">
   {% csrf_token %}
 
-  <!-- First Name -->
-  <div class="form-group">
-    <label for="first_name"
-      ><i class="zmdi zmdi-account material-icons-name"></i
-    ></label>
-    {% render_field user.first_name class='form-control' placeholder='First Name' %}
-  </div>
-
-  <!-- Last Name -->
-  <div class="form-group">
-    <label for="last_name"
-      ><i class="zmdi zmdi-account material-icons-name"></i
-    ></label>
-    {% render_field user.last_name class='form-control' placeholder='Last Name' %}
-  </div>
-
-  <!-- Is Dean / Teacher / Staff -->
-  <div class="form-group">
-    <div>
-      <input
-        type="checkbox"
-        name="is_dean"
-        id="is_dean"
-        class="agree-term"
-      />
-      <label for="is_dean" class="label-agree-term"
-        ><span></span>Dean</label
-      >
-    </div>
-
-    <div>
-      <input
-        type="checkbox"
-        name="is_teacher"
-        id="is_teacher"
-        class="agree-term"
-      />
-      <label for="is_teacher" class="label-agree-term"
-        ><span></span>Teacher</label
-      >
-    </div>
-
-    <div>
-      <input
-        type="checkbox"
-        name="is_staff"
-        id="is_staff"
-        class="agree-term"
-      />
-      <label for="is_staff" class="label-agree-term"
-        ><span></span>Staff</label
-      >
-    </div>
-  </div>
-
-   <!-- Title -->
-  <div class="">
-    <div class="custom-select">
-      {% render_field member.title %}
-    </div>
-  </div>
-
   <!-- Email -->
   <p style="color:red;"> </p>
   <div class="form-group">
     <label for="email"><i class="zmdi zmdi-email"></i></label>
     {% render_field user.email class='form-control' placeholder='Email' %}
-  </div>
-
-  <!-- Password -->
-  <div class="form-group">
-    <label for="password"><i class="zmdi zmdi-lock"></i></label>
-    {% render_field user.password class='form-control' placeholder='Password' %}
-  </div>
-
-  <!-- Contact Number -->
-  <div class="form-group">
-    <label for="contact_number">
-      <i class="zmdi zmdi-phone"></i>
-    </label>
-    {% render_field member.contact_number class='form-control' placeholder='Phone Number' %}
-  </div>
-
-  <!-- Profile Picture -->
-  <div class="form-group">
-    <label for="profile_picture">
-      <i class="zmdi zmdi-account-circle"></i>
-    </label>
-    {% render_field member.profile_picture|attr:'required:true' class='form-control' %}
   </div>
 
   <!-- Register Button -->

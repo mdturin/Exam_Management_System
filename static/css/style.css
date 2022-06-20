@@ -462,6 +462,12 @@ input {
   padding: 6px 30px;
   font-family: Poppins;
   box-sizing: border-box;
+  
+  appearance: checkbox !important;
+  -moz-appearance: checkbox !important;
+  -webkit-appearance: checkbox !important;
+  -o-appearance: checkbox !important;
+  -ms-appearance: checkbox !important;
 }
 
 input::-webkit-input-placeholder {
@@ -647,6 +653,10 @@ label.valid:after {
   margin-top: 10px;
 }
 
+.logout-text{
+  padding: 100px;
+  font-size: 18px;
+}
 @media screen and (max-width: 1200px) {
   .container {
     width: calc(100% - 30px);
