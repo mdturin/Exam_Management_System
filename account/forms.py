@@ -13,13 +13,13 @@ TEACHER_TITLE_CHOICES = [
 ]
 
 
-# class LoginForm(forms.Form):
+class LoginForm(forms.Form):
 
-#     email = forms.EmailField()
+    email = forms.EmailField()
 
-#     password = forms.PasswordInput()
+    password = forms.PasswordInput()
 
-#     remember_me = forms.BooleanField()
+    remember_me = forms.BooleanField()
 
 
 # class UserRegistraionForm(forms.ModelForm):

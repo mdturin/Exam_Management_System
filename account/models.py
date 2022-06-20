@@ -23,11 +23,11 @@ TEACHER_TITLE_CHOICES = [
 ]
 
 
-def get_profile_pictures_directory(self: 'Member', filename: str):
+def get_profile_pictures_directory(self: 'Teacher', filename: str):
     return f'img/pp/{self.user.id}_{filename}'
 
 
-class Member(models.Model):
+class Teacher(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -40,8 +40,6 @@ class Member(models.Model):
         upload_to=get_profile_pictures_directory, blank=True, null=True)
 
     is_dean = models.BooleanField(default=False, null=False)
-
-    is_teacher = models.BooleanField(default=False, null=False)
 
     def __str__(self) -> str:
         return self.user.email

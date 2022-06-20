@@ -8,6 +8,9 @@
   </head>
   <body>
     <h1>Hello</h1>
+    {% if request.user.is_authenticate %}
+    <p> hello </p>
+    {% endif %}
     <a href="/logout" class="logout_btn" style="border-radius: 0px"> Logout</a>
   </body>
 </html>
