@@ -7,8 +7,9 @@ from account.views import *
 
 urlpatterns = [
     path('', LoginView.as_view(template_name='login_page.html'), name='login-page'),
-    path('register/', register_page, name='register-page'),
-    path('dashboard/', dashboard, name='dashboard-page'),
     path('logout/', LogoutView.as_view(template_name='logout_page.html'),
          name='logout-page'),
 ]
+
+# path('register/', register_page, name='register-page'),
+# path('dashboard/', dashboard, name='dashboard-page'),
