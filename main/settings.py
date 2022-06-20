@@ -34,7 +34,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'account',
-    'app_test',
     'widget_tweaks',
 
     'django.contrib.admin',
