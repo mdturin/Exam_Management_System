@@ -1,48 +1,47 @@
-{% load static %} {% load widget_tweaks %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<form class="login100-form validate-form flex-sb flex-w" method="POST" id="login-form">
+  {% csrf_token %}
+  <span class="login100-form-title p-b-53">
+    Sign Up
+  </span>
 
-    <title>Login</title>
+  <a href="#" class="btn-face m-b-20">
+    <i class="fa fa-facebook-official"></i>
+    Facebook
+  </a>
 
-    <!-- Font Icon -->
-    <link
-      rel="stylesheet"
-      href="{% static 'fonts/material-icon/css/material-design-iconic-font.min.css' %}"
-    />
+  <a href="#" class="btn-google m-b-20">
+    <img src="{% static 'images/icons/icon-google.png' %}" alt="GOOGLE">
+    Google
+  </a>
+  
+  <div class="p-t-31 p-b-9">
+    <span class="txt1">
+      Email
+    </span>
+  </div>
+  <div class="wrap-input100 validate-input" data-validate = "Username is required">
+    <input class="input100" type="email" name="username" id = "username" >
+    <span class="focus-input100"></span>
+  </div>
 
-    <!-- Main css -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/register_page.css' %}">
-  </head>
-  <body>
-    <!-- Sign up form -->
-    <section class="signup">
-      <div class="container">
-        <div class="signup-content">
-          <div class="signup-form">
-            <h2 class="form-title">Sign up</h2>
-            {% include "registraion_form.html" %}
-          </div>
-          <div class="signup-image">
-            <figure>
-              <img
-                src="{% static 'images/signup-image.jpg' %}"
-                alt="sing up image"
-              />
-            </figure>
-            <a href="{% url 'login-page' %}" class="signup-image-link"
-              >I am already member</a
-            >
-          </div>
-        </div>
-      </div>
-    </section>
+  <div class="container-login100-form-btn m-t-17">
+    <button class="login100-form-btn">
+      Sign Up
+    </button>
+  </div>
 
-    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'js/register_page.js' %}"></script>
-  </body>
-</html>
+  <div class="w-full text-center p-t-55">
+    <span class="txt2">
+      Already a member?
+    </span>
+
+    <a href="{% url 'login-page' %}" class="txt2 bo1">
+      Sign in now
+    </a>
+  </div>
+</form>
+{% endblock content %}

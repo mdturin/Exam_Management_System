@@ -7,7 +7,7 @@ from account.models import *
 
 
 def register_page(request):
-    return render(request, 'register_page.html')
+    return render(request, 'register_page.html', {'title' : 'Sign Up'})
 
 
 def login_page(request):
@@ -27,4 +27,4 @@ def login_page(request):
                 return redirect('dashboard-page')
         else:
             print("Member Form isn't valid")
-    return render(request, 'login_page.html', {'form': userForm})
+    return render(request, 'login_page.html', {'form': userForm, 'title' : 'Sign In'})
