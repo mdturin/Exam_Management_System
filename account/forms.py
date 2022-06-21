@@ -19,8 +19,6 @@ class LoginForm(forms.Form):
 
     password = forms.PasswordInput()
 
-    remember_me = forms.BooleanField()
-
 
 # class UserRegistraionForm(forms.ModelForm):
 
