@@ -74,3 +74,21 @@ class Staff(models.Model):
     @property
     def get_name(self):
         return self.user.first_name + " " + self.user.last_name
+
+
+class Routine(models.Model):
+
+    exam_date = models.DateField()
+
+    exam_time = models.TimeField()
+
+    room_number = models.IntegerField()
+
+    course = models.OneToOneField(
+        Course, on_delete=models.DO_NOTHING, related_name='+')
+
+    examiners = models.ForeignKey(
+        Teacher, on_delete=models.DO_NOTHING, related_name='+')
+
+    supervisor = models.OneToOneField(
+        Teacher, on_delete=models.DO_NOTHING, related_name='+')
