@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from dashboard.models import *
+
 LEVEL_CHOICES = [
     ('1', '1'),
     ('2', '2'),
@@ -28,7 +30,8 @@ def get_profile_pictures_directory(self: 'Teacher', filename: str):
 
 class Teacher(models.Model):
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, primary_key=True)
 
     title = models.CharField(max_length=255, null=False,
                              choices=TEACHER_TITLE_CHOICES, default='None')
@@ -39,6 +42,9 @@ class Teacher(models.Model):
         upload_to=get_profile_pictures_directory, blank=True, null=True)
 
     is_dean = models.BooleanField(default=False, null=False)
+
+    department = models.OneToOneField(
+        Department, on_delete=models.DO_NOTHING)
 
     def __str__(self) -> str:
         return self.user.email

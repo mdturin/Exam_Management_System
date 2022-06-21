@@ -12,16 +12,14 @@ from django.db import models
 #         return self.name + f" ({self.short_name})"
 
 
-# class Department(models.Model):
-#     name = models.CharField(max_length=255, null=False)
+class Department(models.Model):
+    name = models.CharField(max_length=255, null=True)
 
-#     short_name = models.CharField(max_length=255, null=False)
+    # facutly = models.OneToOneField(
+    #     Faculty, on_delete=models.PROTECT, null=False)
 
-#     facutly = models.OneToOneField(
-#         Faculty, on_delete=models.PROTECT, null=False)
-
-#     def __str__(self) -> str:
-#         return self.name + f" ({self.short_name})"
+    def __str__(self) -> str:
+        return self.name
 
 
 # class Course(models.Model):
