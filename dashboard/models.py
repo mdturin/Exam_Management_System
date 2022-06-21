@@ -1,47 +1,52 @@
 from django.db import models
 
-# Create your models here.
+LEVEL_CHOICES = [
+    ('1', '1'),
+    ('2', '2'),
+    ('3', '3'),
+    ('4', '4'),
+]
+
+SEMESTER_CHOICES = [
+    ('I', 'I'),
+    ('II', 'II'),
+]
 
 
-# class Faculty(models.Model):
-#     name = models.CharField(max_length=255, null=False)
+class Faculty(models.Model):
+    name = models.CharField(max_length=255, null=False)
 
-#     short_name = models.CharField(max_length=255, null=False)
-
-#     def __str__(self) -> str:
-#         return self.name + f" ({self.short_name})"
+    def __str__(self) -> str:
+        return self.name
 
 
-# class Department(models.Model):
-#     name = models.CharField(max_length=255, null=False)
+class Department(models.Model):
+    name = models.CharField(max_length=255, null=True)
 
-#     short_name = models.CharField(max_length=255, null=False)
+    facutly = models.OneToOneField(Faculty, on_delete=models.PROTECT)
 
-#     facutly = models.OneToOneField(
-#         Faculty, on_delete=models.PROTECT, null=False)
-
-#     def __str__(self) -> str:
-#         return self.name + f" ({self.short_name})"
+    def __str__(self) -> str:
+        return self.name
 
 
-# class Course(models.Model):
+class Course(models.Model):
 
-#     name = models.CharField(max_length=255, null=False)
+    code = models.CharField(max_length=255, null=False)
 
-#     credits = models.FloatField(null=False)
+    credits = models.FloatField(null=False)
 
-#     code = models.CharField(max_length=255, null=False)
+    department = models.OneToOneField(
+        Department, on_delete=models.CASCADE, null=False)
 
-#     level = models.CharField(max_length=1, null=False,
-#                              choices=LEVEL_CHOICES, default='1')
+    is_sessional = models.BooleanField(null=False, default=False)
 
-#     semester = models.CharField(
-#         max_length=2, null=False, choices=SEMESTER_CHOICES, default='I')
+    level = models.CharField(max_length=1, null=False,
+                             choices=LEVEL_CHOICES, default='1')
 
-#     is_sessional = models.BooleanField(null=False, default=False)
+    name = models.CharField(max_length=255, null=False)
 
-#     department = models.OneToOneField(
-#         Department, on_delete=models.CASCADE, null=False)
+    semester = models.CharField(
+        max_length=2, null=False, choices=SEMESTER_CHOICES, default='I')
 
-#     def __str__(self) -> str:
-#         return self.name + f" ({self.code})"
+    def __str__(self) -> str:
+        return self.name + f" ({self.code})"
