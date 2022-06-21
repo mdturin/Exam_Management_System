@@ -3,18 +3,6 @@ from django.contrib.auth.models import User
 
 from dashboard.models import *
 
-LEVEL_CHOICES = [
-    ('1', '1'),
-    ('2', '2'),
-    ('3', '3'),
-    ('4', '4'),
-]
-
-SEMESTER_CHOICES = [
-    ('I', 'I'),
-    ('II', 'II'),
-]
-
 TEACHER_TITLE_CHOICES = [
     ('Professor', 'Professor'),
     ('Associate Professor', 'Associate Professor'),
@@ -25,7 +13,7 @@ TEACHER_TITLE_CHOICES = [
 
 
 def get_profile_pictures_directory(self: 'Teacher', filename: str):
-    return f'img/pp/{self.user.id}_{filename}'
+    return f'img/pp/{self.user_id}_{filename}'
 
 
 class Teacher(models.Model):
@@ -41,10 +29,40 @@ class Teacher(models.Model):
     profile_picture = models.ImageField(
         upload_to=get_profile_pictures_directory, blank=True, null=True)
 
-    is_dean = models.BooleanField(default=False, null=False)
-
     department = models.OneToOneField(
         Department, on_delete=models.DO_NOTHING)
+
+    def __str__(self) -> str:
+        return self.user.email
+
+    @property
+    def get_instance(self):
+        return self
+
+    @property
+    def get_name(self):
+        return self.user.first_name + " " + self.user.last_name
+
+
+class Dean(models.Model):
+    teacher = models.OneToOneField(Teacher, on_delete=models.PROTECT)
+
+    faculty = models.OneToOneField(Faculty, on_delete=models.PROTECT)
+
+    joined = models.DateField()
+
+
+class Staff(models.Model):
+
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, primary_key=True)
+
+    contact_number = models.CharField(null=False, unique=True, max_length=11)
+
+    profile_picture = models.ImageField(
+        upload_to=get_profile_pictures_directory, blank=True, null=True)
+
+    facutly = models.OneToOneField(Faculty, on_delete=models.DO_NOTHING)
 
     def __str__(self) -> str:
         return self.user.email
