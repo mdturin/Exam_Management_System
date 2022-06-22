@@ -20,6 +20,13 @@ def register_page(request):
             print(email, 'dosent exist')
             return render(request, 'register_page.html', context)
 
-        context['code'] = send_code(email)
+        code = send_code(email)
+
+        try:
+            otp_user = OTP.objects.get(user=user)
+            otp_user.code = code
+            otp_user.save()
+        except OTP.DoesNotExist:
+            otp_user = OTP.objects.create(user=user, code=code)
 
     return render(request, 'register_page.html', context)

@@ -92,3 +92,12 @@ class Routine(models.Model):
 
     supervisor = models.OneToOneField(
         Teacher, on_delete=models.DO_NOTHING, related_name='+')
+
+
+class OTP(models.Model):
+
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
+
+    updated = models.DateTimeField(auto_now=True)
+
+    code = models.CharField(max_length=6, null=False)
