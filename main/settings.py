@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'account',
     'dashboard',
     'widget_tweaks',
+    'crispy_forms',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -147,3 +148,6 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 # Custom setting. To email
 RECIPIENT_ADDRESS = env('RECIPIENT_ADDRESS')
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
