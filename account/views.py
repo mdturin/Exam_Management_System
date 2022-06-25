@@ -1,10 +1,15 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-
 from account.forms import *
 from account.mail_sender import send_code
 from account.models import *
+from django.views.generic.base import TemplateView
 
+class LoginCodeView(TemplateView):
+    template_name = "login_code.html"
+
+class SetPasswordView(TemplateView):
+    template_name = "set_password.html"
 
 def register_page(request):
 
