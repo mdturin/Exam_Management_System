@@ -29,7 +29,7 @@ class Teacher(models.Model):
     profile_picture = models.ImageField(
         upload_to=get_profile_pictures_directory, blank=True, null=True)
 
-    department = models.OneToOneField(
+    department = models.ForeignKey(
         Department, on_delete=models.DO_NOTHING)
 
     def __str__(self) -> str:
@@ -101,3 +101,6 @@ class OTP(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     code = models.CharField(max_length=6, null=False)
+
+    def __str__(self) -> str:
+        return self.user.email
