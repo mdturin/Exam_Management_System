@@ -17,7 +17,7 @@ def login_code(request):
         if otp_user.code == code:
             return redirect('set-password')
         else:
-            print('wrong code')
+            context['code-error'] = "Code didn't match"
     return render(request, 'login_code.html', context)
 
 
