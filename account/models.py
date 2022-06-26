@@ -101,3 +101,6 @@ class OTP(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     code = models.CharField(max_length=6, null=False)
+
+    def __str__(self) -> str:
+        return self.user.email
