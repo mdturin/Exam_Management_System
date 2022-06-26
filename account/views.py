@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic.base import TemplateView
 
 from account.forms import *
@@ -38,7 +38,6 @@ def register_page(request):
         except OTP.DoesNotExist:
             otp_user = OTP.objects.create(user=user, code=code)
 
-        context = {'title': 'Verify User'}
-        return render(request, 'login_code.html', context)
+        return redirect('login-code')
 
     return render(request, 'register_page.html', context)
