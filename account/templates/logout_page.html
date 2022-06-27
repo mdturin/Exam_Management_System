@@ -2,8 +2,21 @@
 {% load static %}
 {% load widget_tweaks %}
 {% block content %}
-<div class="text-center content logout-text">
-  Logged Out Successfully. <br />
-  Thank you for using our system!
+<div class="text-center content logout-text d-flex flex-column">
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    Logged Out Successfully. <br />
+    Thank you for using our system!
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <a href="{% url 'register-page' %}" class="btn-face m-b-20">
+    <!-- <i class="fa fa-facebook-official"></i> -->
+    Register
+  </a>
+  <a href="{% url 'login-page' %}" class="btn-google m-b-20">
+    <!-- <img src="{% static 'images/icons/icon-google.png' %}" alt="GOOGLE" /> -->
+    Log In
+  </a>
 </div>
 {% endblock content %}

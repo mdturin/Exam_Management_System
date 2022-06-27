@@ -206,7 +206,9 @@ iframe {
   line-height: 1.2;
   text-align: center;
 }
-
+.logout-text{
+  align-items: center;
+}
 /*------------------------------------------------------------------
 [ Button sign in with ]*/
 .btn-face,
@@ -524,4 +526,4 @@ iframe {
   .btn-google {
     width: 100%;
   }
-}
+}}
