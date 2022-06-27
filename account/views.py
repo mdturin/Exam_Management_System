@@ -6,6 +6,9 @@ from account.forms import *
 from account.mail_sender import send_code
 from account.models import *
 
+# login auth
+from django.contrib.auth import authenticate
+from django.contrib import messages
 
 def login_code(request):
     context = {'title': 'Verify User'}
@@ -57,7 +60,8 @@ def register_page(request):
             user = User.objects.get(email=email)
 
         except User.DoesNotExist:
-            print(email, 'dosent exist')
+            # print(email, 'dosent exist')
+            messages.warning(request, (email+ ' dosent exist'))
             return render(request, 'register_page.html', context)
 
         code = send_code(email)
@@ -72,3 +76,5 @@ def register_page(request):
         return redirect('login-code')
 
     return render(request, 'register_page.html', context)
+
+
