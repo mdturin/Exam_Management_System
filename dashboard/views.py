@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from account.models import *
+from dashboard.models import *
 
 
 def is_dean(user):
@@ -29,11 +30,23 @@ def has_permission(user):
 
 def dashboard(request):
     context = {
-        'is_staff': has_permission(request.user)
+        'title': 'Dashboard',
+        'is_staff': has_permission(request.user),
     }
 
+    faculty = None
+    staff = is_staff(request.user)
+    dean = is_dean(request.user)
+
+    if staff:
+        faculty = staff.faculty
+    else:
+        faculty = dean.faculty
+
     if context['is_staff']:
-        context['staffs'] = Staff.objects.all()
+        context['staffs'] = Staff.objects.filter(faculty=faculty)
+        context['courses'] = Course.objects.all()
         context['routines'] = Routine.objects.all()
+        context['teachers'] = Teacher.objects.all()
 
     return render(request, 'dashboard.html', context)
