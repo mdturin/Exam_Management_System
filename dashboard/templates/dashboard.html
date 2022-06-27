@@ -341,30 +341,16 @@
                           </tr>
                         </thead>
                         <tbody>
+                        {% for routine in routines %}
                           <tr>
-                            <td> 27 June 2022 </td>
-                            <td> 10:00 AM </td>
-                            <td> 5 </td>
-                            <td> CSE-211 </td>
-                            <td> John </td>
-                            <td>Rumman, Turin, Bhudeb</td>
+                            <td> {{ routine.exam_date }} </td>
+                            <td> {{ routine.exam_time }} </td>
+                            <td> {{ routine.room_number }} </td>
+                            <td> {{ routine.course }} </td>
+                            <td> {{ routine.supervisor }} </td>
+                            <td> {{ routine.examiners }} </td>
                           </tr>
-                          <tr>
-                            <td> 27 June 2022 </td>
-                            <td> 10:00 AM </td>
-                            <td> 5 </td>
-                            <td> CSE-211 </td>
-                            <td> John </td>
-                            <td>Rumman, Turin, Bhudeb</td>
-                          </tr>
-                          <tr>
-                            <td> 27 June 2022 </td>
-                            <td> 10:00 AM </td>
-                            <td> 5 </td>
-                            <td> CSE-211 </td>
-                            <td> John </td>
-                            <td>Rumman, Turin, Bhudeb</td>
-                          </tr>
+                        {% endfor %}
                         </tbody>
                       </table>
                     </div>

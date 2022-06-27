@@ -49,4 +49,4 @@ class Course(models.Model):
         max_length=2, null=False, choices=SEMESTER_CHOICES, default='I')
 
     def __str__(self) -> str:
-        return self.name + f" ({self.code})"
+        return f"{ self.code }"

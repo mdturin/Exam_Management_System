@@ -33,7 +33,7 @@ class Teacher(models.Model):
         Department, on_delete=models.DO_NOTHING)
 
     def __str__(self) -> str:
-        return self.user.email
+        return self.user.first_name + " " + self.user.last_name
 
     @property
     def get_instance(self):
