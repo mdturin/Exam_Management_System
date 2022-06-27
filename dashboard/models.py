@@ -23,7 +23,7 @@ class Faculty(models.Model):
 class Department(models.Model):
     name = models.CharField(max_length=255, null=True)
 
-    facutly = models.OneToOneField(Faculty, on_delete=models.PROTECT)
+    faculty = models.OneToOneField(Faculty, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
         return self.name

@@ -35,11 +35,18 @@ environ.Env.read_env()
 
 # Application definition
 
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
+
 INSTALLED_APPS = [
     'account',
     'dashboard',
     'widget_tweaks',
     'crispy_forms',
+    'debug_toolbar',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'main.urls'

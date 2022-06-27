@@ -1,3 +1,4 @@
+from asyncio import selector_events
 from django.shortcuts import render
 from account.models import *
 from dashboard.models import *
@@ -24,29 +25,57 @@ def is_staff(user):
     return staff
 
 
-def has_permission(user):
-    return is_staff(user) != None or is_dean(user) != None
+def get_staff(faculty):
+    return list(Staff.objects.filter(faculty=faculty))
+
+
+def get_courses(faculty):
+    courses = Course.objects.all()
+
+    selected_courses = []
+    for course in courses:
+        dept = Department.objects.get(name=course.department)
+        if dept.faculty == faculty:
+            selected_courses.append(course)
+
+    return selected_courses
+
+
+def get_routines(faculty):
+    return list(Routine.objects.filter(faculty=faculty))
+
+
+def get_teachers(faculty):
+    teachers = Teacher.objects.all()
+
+    selected_teachers = []
+    for teacher in teachers:
+        dept = Department.objects.get(name=teacher.department)
+        if dept.faculty == faculty:
+            selected_teachers.append(teacher)
+
+    return selected_teachers
 
 
 def dashboard(request):
-    context = {
-        'title': 'Dashboard',
-        'is_staff': has_permission(request.user),
-    }
-
-    faculty = None
-    staff = is_staff(request.user)
+    faculty_name = None
     dean = is_dean(request.user)
+    staff = is_staff(request.user)
 
     if staff:
-        faculty = staff.faculty
-    else:
-        faculty = dean.faculty
+        faculty_name = staff.faculty
+    elif dean:
+        faculty_name = dean.faculty
+
+    context = {
+        'is_staff': (staff != None or dean != None)
+    }
 
     if context['is_staff']:
-        context['staffs'] = Staff.objects.filter(faculty=faculty)
-        context['courses'] = Course.objects.all()
-        context['routines'] = Routine.objects.all()
-        context['teachers'] = Teacher.objects.all()
+        faculty = Faculty.objects.get(name=faculty_name)
+        context['staffs'] = get_staff(faculty)
+        context['courses'] = get_courses(faculty_name)
+        context['routines'] = get_routines(faculty)
+        context['teachers'] = get_teachers(faculty_name)
 
     return render(request, 'dashboard.html', context)

@@ -62,7 +62,7 @@ class Staff(models.Model):
     profile_picture = models.ImageField(
         upload_to=get_profile_pictures_directory, blank=True, null=True)
 
-    facutly = models.OneToOneField(Faculty, on_delete=models.DO_NOTHING)
+    faculty = models.OneToOneField(Faculty, on_delete=models.DO_NOTHING)
 
     def __str__(self) -> str:
         return self.user.email
@@ -83,6 +83,9 @@ class Routine(models.Model):
     exam_time = models.TimeField()
 
     room_number = models.IntegerField()
+
+    faculty = models.ForeignKey(
+        Faculty, on_delete=models.DO_NOTHING, related_name='+')
 
     course = models.OneToOneField(
         Course, on_delete=models.DO_NOTHING, related_name='+')
