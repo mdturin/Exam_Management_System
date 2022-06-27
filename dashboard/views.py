@@ -78,7 +78,4 @@ def dashboard(request):
         context['routines'] = get_routines(faculty)
         context['teachers'] = get_teachers(faculty_name)
 
-        print(faculty_name)
-        print(context['routines'])
-
     return render(request, 'dashboard.html', context)
