@@ -7,7 +7,6 @@ from account.mail_sender import send_code
 from account.models import *
 
 # login auth
-from django.contrib.auth import authenticate
 from django.contrib import messages
 
 def login_code(request):
@@ -20,7 +19,8 @@ def login_code(request):
         if otp_user.code == code:
             return redirect('set-password')
         else:
-            context['code-error'] = "Code didn't match"
+            messages.warning(request, ("Code didn't match"))
+            # context['code-error'] = "Code didn't match"
     return render(request, 'login_code.html', context)
 
 
@@ -36,7 +36,8 @@ def set_password(request):
             user.set_password(pass1)
             user.save()
         else:
-            context['pass-error'] = "passwords didn't match"
+            messages.warning(request, ("Passwords didn't match"))
+            # context['pass-error'] = "passwords didn't match"
             render(request, 'set_password.html', context)
 
         user = authenticate(request, username=email, password=pass1)
@@ -44,7 +45,10 @@ def set_password(request):
             login(request, user)
             return redirect('dashboard-page')
         else:
-            context['error'] = 'System Fail. Try Again!'
+            # Maybe this section has some problems
+            pass
+            # messages.warning(request, ("System Fail. Try Again!"))
+            # context['error'] = 'System Fail. Try Again!'
 
     return render(request, 'set_password.html', context)
 
