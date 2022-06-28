@@ -25,6 +25,14 @@ def is_staff(user):
     return staff
 
 
+def is_teacher(user):
+    try:
+        teacher = Teacher.objects.get(user=user)
+    except Teacher.DoesNotExist:
+        return None
+    return teacher
+
+
 def get_staff(faculty):
     return list(Staff.objects.filter(faculty=faculty))
 
@@ -61,6 +69,7 @@ def dashboard(request):
     faculty_name = None
     dean = is_dean(request.user)
     staff = is_staff(request.user)
+    teacher = is_teacher(request.user)
 
     if staff:
         faculty_name = staff.faculty
@@ -68,8 +77,11 @@ def dashboard(request):
         faculty_name = dean.faculty
 
     context = {
-        'is_staff': (staff != None or dean != None)
+        'is_staff': (staff != None or dean != None),
+        'user': staff or teacher
     }
+
+    print(context)
 
     if context['is_staff']:
         faculty = Faculty.objects.get(name=faculty_name)
