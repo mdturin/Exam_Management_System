@@ -22,6 +22,7 @@ urlpatterns = [
     path('', include('account.urls')),
     path('user/', include('dashboard.urls')),
     path('admin/', admin.site.urls),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
 
 urlpatterns += static(
