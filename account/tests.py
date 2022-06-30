@@ -64,7 +64,7 @@ def gen_teachers():
 
 
 def gen_routines():
-    for _ in range(1):
+    for _ in range(100):
         routine = Routine()
         routine.exam_date = fake.date()
         routine.exam_time = fake.time()
@@ -72,6 +72,3 @@ def gen_routines():
         routine.faculty = faculies[random.randint(0, len(faculies)-1)]
         routine.course = courses[random.randint(0, len(courses)-1)]
         routine.supervisor = teachers[random.randint(0, len(teachers)-1)]
-
-
-gen_teachers()
