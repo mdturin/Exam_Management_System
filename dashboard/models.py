@@ -33,9 +33,9 @@ class Course(models.Model):
 
     code = models.CharField(max_length=255, null=False)
 
-    credits = models.FloatField(null=False)
+    credits = models.DecimalField(null=False, max_digits=4, decimal_places=2)
 
-    department = models.OneToOneField(
+    department = models.ForeignKey(
         Department, on_delete=models.CASCADE, null=False)
 
     is_sessional = models.BooleanField(null=False, default=False)
