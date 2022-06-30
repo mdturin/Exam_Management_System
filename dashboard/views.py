@@ -65,7 +65,7 @@ def get_teachers(faculty):
     return selected_teachers
 
 
-def dashboard(request):
+def get_context(request):
     faculty_name = None
     dean = is_dean(request.user)
     staff = is_staff(request.user)
@@ -81,8 +81,6 @@ def dashboard(request):
         'user': staff or teacher
     }
 
-    print(context)
-
     if context['is_staff']:
         faculty = Faculty.objects.get(name=faculty_name)
         context['staffs'] = get_staff(faculty)
@@ -90,4 +88,14 @@ def dashboard(request):
         context['routines'] = get_routines(faculty)
         context['teachers'] = get_teachers(faculty_name)
 
+    return context
+
+
+def dashboard(request):
+    context = get_context(request)
     return render(request, 'dashboard.html', context)
+
+
+def teacher_page(request):
+    context = get_context(request)
+    return render(request, 'teacher-section.html', context)
