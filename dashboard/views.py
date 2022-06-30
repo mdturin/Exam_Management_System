@@ -99,3 +99,13 @@ def dashboard(request):
 def teacher_page(request):
     context = get_context(request)
     return render(request, 'teacher-section.html', context)
+
+
+def staff_page(request):
+    context = get_context(request)
+    return render(request, 'staff-section.html', context)
+
+
+def routine_page(request):
+    context = get_context(request)
+    return render(request, 'routine-section.html', context)
