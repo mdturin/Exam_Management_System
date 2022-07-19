@@ -86,7 +86,7 @@ def get_context(request):
         context['courses'] = get_courses(faculty_name)
         context['routines'] = get_routines(faculty)
         context['teachers'] = get_teachers(faculty_name)
-        context['departments'] = list(Department.objects.all())
+        context['departments'] = list(Department.objects.filter(faculty=faculty))
 
     return context
 
@@ -113,3 +113,7 @@ def routine_page(request):
 def full_routine(request):
     context = get_context(request)
     return render(request, 'full-routine.html', context)
+
+def add_exam(request):
+    context = get_context(request)
+    return render(request, 'add-exam.html', context)
