@@ -1,4 +1,3 @@
-from asyncio import selector_events
 from django.shortcuts import render
 from account.models import *
 from dashboard.models import *
@@ -87,6 +86,7 @@ def get_context(request):
         context['courses'] = get_courses(faculty_name)
         context['routines'] = get_routines(faculty)
         context['teachers'] = get_teachers(faculty_name)
+        context['departments'] = list(Department.objects.all())
 
     return context
 
