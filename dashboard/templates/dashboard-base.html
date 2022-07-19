@@ -60,71 +60,18 @@
                 </div>
                 <div class="profile-name">
                   <h5 class="mb-0 font-weight-normal">
-
-                    {% if user.user.first_name and user.user.last_name %}
-                      {{ user.user.first_name }} {{ user.user.last_name }}
-                    {% elif user.user.first_name %}
-                      {{ user.user.first_name }}
-                    {% elif user.user.last_name %}
-                      {{ user.user.last_name }}
-                    {% else %}
-                      {{ user.user.username }}
-                    {% endif %}
-
+                    {{ user.user.first_name }} {{ user.user.last_name }}
                   </h5>
                   <span>
                     {% if is_staff %}
                       Staff
-                    {% elif is_dean%}
+                    {% elif is_dean %}
                       Dean
                     {% else %}
                       Teacher
                     {% endif %}
                   </span>
                 </div>
-              </div>
-              <a href="#" id="profile-dropdown" data-toggle="dropdown">
-                <i class="mdi mdi-dots-vertical"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown" >
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-settings text-primary"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">
-                      Account settings
-                    </p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-onepassword text-info"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">
-                      Change Password
-                    </p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-calendar-today text-success"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">
-                      To-do list
-                    </p>
-                  </div>
-                </a>
               </div>
             </div>
           </li>
@@ -201,63 +148,7 @@
               </li>
             </ul>
             <ul class="navbar-nav navbar-nav-right">
-              <li class="nav-item dropdown d-none d-lg-block">
-                <a
-                  class="nav-link btn btn-success create-new-button"
-                  id="createbuttonDropdown"
-                  data-toggle="dropdown"
-                  aria-expanded="false"
-                  href="#"
-                  >+ Create New Project</a
-                >
-                <div
-                  class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-                  aria-labelledby="createbuttonDropdown"
-                >
-                  <h6 class="p-3 mb-0">Projects</h6>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-file-outline text-primary"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">
-                        Software Development
-                      </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-web text-info"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">
-                        UI Development
-                      </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-layers text-danger"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">
-                        Software Testing
-                      </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <p class="p-3 mb-0 text-center">See all projects</p>
-                </div>
-              </li>
+
               <li class="nav-item nav-settings d-none d-lg-block">
                 <a class="nav-link" href="#">
                   <i class="mdi mdi-view-grid"></i>
@@ -409,38 +300,38 @@
                     {% endif %}
                     
                     <p class="mb-0 d-none d-sm-block navbar-profile-name">
-                      {% if user.user.last_name %}
-                        {{ user.user.last_name }}
-                      {% elif user.user.first_name %}
-                        {{ user.user.first_name }}
-                      {% else %}
-                        {{ user.user.username }}
-                      {% endif %}
+                      {{ user.user.last_name }}
                     </p>
-                    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+                    <i class="mdi mdi-menu-down d-none d-sm-block pl-3"></i>
                   </div>
                 </a>
                 <div
                   class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
                   aria-labelledby="profileDropdown"
                 >
-                  <h6 class="p-3 mb-0">Profile</h6>
+                  <a class="dropdown-item preview-item" href="#">
+                    <div class="preview-thumbnail">
+                      <div class="preview-icon bg-dark rounded-circle">
+                        <i class="mdi mdi-contacts text-info"></i>
+                      </div>
+                    </div>
+                    <div class="preview-item-content">
+                      <p class="preview-subject mb-1">Profile</p>
+                    </div>
+                  </a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
+                  <a class="dropdown-item preview-item" href="#">
                     <div class="preview-thumbnail">
                       <div class="preview-icon bg-dark rounded-circle">
                         <i class="mdi mdi-settings text-success"></i>
                       </div>
                     </div>
                     <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Settings</p>
+                      <p class="preview-subject mb-1">Account Settings</p>
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
-                  <a
-                    class="dropdown-item preview-item"
-                    href="{% url 'logout-page' %}"
-                  >
+                  <a class="dropdown-item preview-item" href="{% url 'logout-page' %}">
                     <div class="preview-thumbnail">
                       <div class="preview-icon bg-dark rounded-circle">
                         <i class="mdi mdi-logout text-danger"></i>
@@ -450,8 +341,6 @@
                       <p class="preview-subject mb-1">Log out</p>
                     </div>
                   </a>
-                  <div class="dropdown-divider"></div>
-                  <p class="p-3 mb-0 text-center">Advanced settings</p>
                 </div>
               </li>
             </ul>

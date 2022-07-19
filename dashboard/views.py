@@ -109,3 +109,7 @@ def staff_page(request):
 def routine_page(request):
     context = get_context(request)
     return render(request, 'routine-section.html', context)
+
+def full_routine(request):
+    context = get_context(request)
+    return render(request, 'full-routine.html', context)

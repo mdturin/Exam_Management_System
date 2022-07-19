@@ -21132,4 +21132,10 @@ div.tagsinput {
   -webkit-flex-grow: 1;
   flex-grow: 1; }
 
+.create-new {
+  display:-webkit-flex;
+  display:flex;
+  padding-bottom:10px;
+  justify-content:flex-end;
+}
 /*# sourceMappingURL=maps/style.css.map */
