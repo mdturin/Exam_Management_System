@@ -63,9 +63,15 @@
                     {{ user.user.first_name }} {{ user.user.last_name }}
                   </h5>
                   <span>
-                    {% if is_staff %}
+                    <!-- {% for staff in staffs %}
+                      {{ staff.user }}
+                      <br>
+                    {% endfor %}
+                    {{ user.user }} -->
+
+                    {% if if_staff %}
                       Staff
-                    {% elif is_dean %}
+                    {% elif if_dean %}
                       Dean
                     {% else %}
                       Teacher
@@ -96,6 +102,7 @@
               <span class="menu-title">Teacher Section</span>
             </a>
           </li>
+          {% if if_dean %}
           <li class="nav-item menu-items">
             <a class="nav-link" href="{% url 'staff-section' %}">
               <span class="menu-icon">
@@ -104,6 +111,7 @@
               <span class="menu-title">Staff Section</span>
             </a>
           </li>
+          {% endif %}
           <li class="nav-item menu-items">
             <a class="nav-link" href="{% url 'routine-section' %}">
               <span class="menu-icon">

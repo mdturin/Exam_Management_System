@@ -77,6 +77,8 @@ def get_context(request):
 
     context = {
         'is_staff': (staff != None or dean != None),
+        'if_staff': staff, 
+        'if_dean': dean,
         'user': staff or teacher
     }
 
@@ -117,3 +119,11 @@ def full_routine(request):
 def add_exam(request):
     context = get_context(request)
     return render(request, 'add-exam.html', context)
+
+def add_staff(request):
+    context = get_context(request)
+    return render(request, 'add-staff.html', context)
+
+def add_teacher(request):
+    context = get_context(request)
+    return render(request, 'add-teacher.html', context)

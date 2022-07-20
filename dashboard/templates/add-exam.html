@@ -2,7 +2,54 @@
 {% load static %}
 {% block content %}
 
-<h1>Add Exam</h1>
-
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Add Exam</h4>
+          <form class="forms-sample">
+            <div class="form-group">
+                <label>Department</label>
+                <select class="js-example-basic-single" style="width:100%">
+                    {% for department in departments %}
+                        <option value="{{ department.name }}">{{ department.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Level</label>
+                <select class="js-example-basic-single" style="width:100%">
+                    {% for level in levels %}
+                        <option value="{{ level.name }}">{{ level.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Semester</label>
+                <select class="js-example-basic-single" style="width:100%">
+                    {% for semester in semesters %}
+                        <option value="{{ semester.name }}">{{ semester.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Exam Type</label>
+                <select class="js-example-basic-single" style="width:100%">
+                    {% for type in types %}
+                        <option value="{{ type.name }}">{{ type.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="start-date">Start date:</label>
+                <input type="date" id="start-date" name="trip-start" value="" min="" max="">
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <button class="btn btn-dark">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
 
 {% endblock content %}
