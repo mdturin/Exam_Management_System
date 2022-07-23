@@ -1,4 +1,3 @@
-from asyncio import selector_events
 from django.shortcuts import render
 from account.models import *
 from dashboard.models import *
@@ -65,7 +64,7 @@ def get_teachers(faculty):
     return selected_teachers
 
 
-def dashboard(request):
+def get_context(request):
     faculty_name = None
     dean = is_dean(request.user)
     staff = is_staff(request.user)
@@ -78,10 +77,10 @@ def dashboard(request):
 
     context = {
         'is_staff': (staff != None or dean != None),
+        'if_staff': staff, 
+        'if_dean': dean,
         'user': staff or teacher
     }
-
-    print(context)
 
     if context['is_staff']:
         faculty = Faculty.objects.get(name=faculty_name)
@@ -89,5 +88,42 @@ def dashboard(request):
         context['courses'] = get_courses(faculty_name)
         context['routines'] = get_routines(faculty)
         context['teachers'] = get_teachers(faculty_name)
+        context['departments'] = list(Department.objects.filter(faculty=faculty))
 
+    return context
+
+
+def dashboard(request):
+    context = get_context(request)
     return render(request, 'dashboard.html', context)
+
+
+def teacher_page(request):
+    context = get_context(request)
+    return render(request, 'teacher-section.html', context)
+
+
+def staff_page(request):
+    context = get_context(request)
+    return render(request, 'staff-section.html', context)
+
+
+def routine_page(request):
+    context = get_context(request)
+    return render(request, 'routine-section.html', context)
+
+def full_routine(request):
+    context = get_context(request)
+    return render(request, 'full-routine.html', context)
+
+def add_exam(request):
+    context = get_context(request)
+    return render(request, 'add-exam.html', context)
+
+def add_staff(request):
+    context = get_context(request)
+    return render(request, 'add-staff.html', context)
+
+def add_teacher(request):
+    context = get_context(request)
+    return render(request, 'add-teacher.html', context)

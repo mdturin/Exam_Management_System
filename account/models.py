@@ -24,7 +24,7 @@ class Teacher(models.Model):
     title = models.CharField(max_length=255, null=False,
                              choices=TEACHER_TITLE_CHOICES, default='None')
 
-    contact_number = models.CharField(null=False, unique=True, max_length=11)
+    contact_number = models.CharField(null=False, unique=True, max_length=255)
 
     profile_picture = models.ImageField(
         upload_to=get_profile_pictures_directory, blank=True, null=True)
@@ -62,7 +62,7 @@ class Staff(models.Model):
     profile_picture = models.ImageField(
         upload_to=get_profile_pictures_directory, blank=True, null=True)
 
-    faculty = models.OneToOneField(Faculty, on_delete=models.DO_NOTHING)
+    faculty = models.ForeignKey(Faculty, on_delete=models.DO_NOTHING)
 
     def __str__(self) -> str:
         return self.user.email

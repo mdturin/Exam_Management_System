@@ -5,7 +5,11 @@ from dashboard.views import *
 
 urlpatterns = [
     path('', dashboard, name='dashboard-page'),
-    path('teacher-section', TemplateView.as_view(template_name = "teacher-section.html"), name='teacher-section'),
-    path('staff-section', TemplateView.as_view(template_name = "staff-section.html"), name='staff-section'),
-    path('routine-section', TemplateView.as_view(template_name = "routine-section.html"), name='routine-section'),
+    path('teacher-section', teacher_page, name='teacher-section'),
+    path('staff-section', staff_page, name='staff-section'),
+    path('routine-section', routine_page, name='routine-section'),
+    path('full-routine', full_routine, name='full-routine'),
+    path('add-exam', add_exam, name='add-exam'),
+    path('add-staff', add_staff, name='add-staff'),
+    path('add-teacher', add_teacher, name='add-teacher'),
 ]
