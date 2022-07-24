@@ -131,6 +131,10 @@ def add_staff(request):
     return render(request, 'add-staff.html', context)
 
 
+def get_directory(user_id, filename: str):
+    return f'img/pp/{user_id}_{filename}'
+
+
 def add_teacher(request):
 
     if request.method == 'POST':
@@ -139,7 +143,9 @@ def add_teacher(request):
         email = request.POST.get('email', '')
         title = request.POST.get('title', '')
         mobile = request.POST.get('mobile', '')
-        picture = request.POST.get('picture', '')
+        picture = request.POST.get('picture')
+
+        print(picture)
         dept = request.POST.get('dept', '')
 
         try:
@@ -153,15 +159,16 @@ def add_teacher(request):
 
                 user.save()
 
-                teacher = Teacher(
+                teacher = Teacher.objects.create(
                     user=user,
                     title=title,
                     contact_number=mobile,
-                    profile_picture=picture,
                     department=Department.objects.get(name=dept)
                 )
 
+                teacher.profile_picture = get_directory(user.id, picture)
                 teacher.save()
+
         except:
             return redirect('add-teacher')
 
