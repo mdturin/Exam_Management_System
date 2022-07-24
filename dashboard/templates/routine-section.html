@@ -8,6 +8,7 @@
     Add Exam
   </a>
 </div>
+
 <!-- Current Exams -->
 <div class="row">
   <div class="col-12 grid-margin">
@@ -34,7 +35,11 @@
                 <td>{{ routine.room_number }}</td>
                 <td>{{ routine.course }}</td>
                 <td>{{ routine.supervisor }}</td>
-                <td>{{ routine.examiners }}</td>
+                <td>
+                  {% for teacher in routine.examiners.all %}
+                    <p> {{ teacher }} </p>
+                  {% endfor %}
+                </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -71,7 +76,11 @@
                 <td>{{ routine.room_number }}</td>
                 <td>{{ routine.course }}</td>
                 <td>{{ routine.supervisor }}</td>
-                <td>{{ routine.examiners }}</td>
+                <td>
+                  {% for teacher in routine.examiners.all %}
+                    <p> {{ teacher }} </p>
+                  {% endfor %}
+                </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -108,7 +117,11 @@
                 <td>{{ routine.room_number }}</td>
                 <td>{{ routine.course }}</td>
                 <td>{{ routine.supervisor }}</td>
-                <td>{{ routine.examiners }}</td>
+                <td>
+                  {% for teacher in routine.examiners.all %}
+                    <p> {{ teacher }} </p>
+                  {% endfor %}
+                </td>
               </tr>
               {% endfor %}
             </tbody>
