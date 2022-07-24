@@ -29,8 +29,7 @@ class Teacher(models.Model):
     profile_picture = models.ImageField(
         upload_to=get_profile_pictures_directory, blank=True, null=True)
 
-    department = models.ForeignKey(
-        Department, on_delete=models.DO_NOTHING)
+    department = models.ForeignKey(Department, on_delete=models.DO_NOTHING)
 
     def __str__(self) -> str:
         return self.user.first_name + " " + self.user.last_name

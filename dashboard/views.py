@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from account.models import *
 from dashboard.models import *
+from django.contrib.auth.models import User
+from django.db import transaction
 
 
 def is_dean(user):
@@ -77,7 +79,7 @@ def get_context(request):
 
     context = {
         'is_staff': (staff != None or dean != None),
-        'if_staff': staff, 
+        'if_staff': staff,
         'if_dean': dean,
         'user': staff or teacher
     }
@@ -88,7 +90,8 @@ def get_context(request):
         context['courses'] = get_courses(faculty_name)
         context['routines'] = get_routines(faculty)
         context['teachers'] = get_teachers(faculty_name)
-        context['departments'] = list(Department.objects.filter(faculty=faculty))
+        context['departments'] = list(
+            Department.objects.filter(faculty=faculty))
 
     return context
 
@@ -112,18 +115,62 @@ def routine_page(request):
     context = get_context(request)
     return render(request, 'routine-section.html', context)
 
+
 def full_routine(request):
     context = get_context(request)
     return render(request, 'full-routine.html', context)
+
 
 def add_exam(request):
     context = get_context(request)
     return render(request, 'add-exam.html', context)
 
+
 def add_staff(request):
     context = get_context(request)
     return render(request, 'add-staff.html', context)
 
+
 def add_teacher(request):
+
+    if request.method == 'POST':
+        fname = request.POST.get('first_name', '')
+        lname = request.POST.get('last_name', '')
+        email = request.POST.get('email', '')
+        title = request.POST.get('title', '')
+        mobile = request.POST.get('mobile', '')
+        picture = request.POST.get('picture', '')
+        dept = request.POST.get('dept', '')
+
+        try:
+            with transaction.atomic():
+                user = User(
+                    username=email,
+                    email=email,
+                    first_name=fname,
+                    last_name=lname,
+                )
+
+                user.save()
+
+                teacher = Teacher(
+                    user=user,
+                    title=title,
+                    contact_number=mobile,
+                    profile_picture=picture,
+                    department=Department.objects.get(name=dept)
+                )
+
+                teacher.save()
+        except:
+            return redirect('add-teacher')
+
+        return redirect('teacher-section')
+
+    TEACHER_TITLE_CHOICES = [
+        'Professor', 'Associate Professor', 'Assistant Professor', 'Lecturer', 'None']
+
     context = get_context(request)
+    context['titles'] = TEACHER_TITLE_CHOICES
+
     return render(request, 'add-teacher.html', context)
