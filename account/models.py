@@ -91,10 +91,10 @@ class Routine(models.Model):
         Course, on_delete=models.DO_NOTHING, related_name='+')
 
     examiners = models.ForeignKey(
-        Teacher, on_delete=models.DO_NOTHING, related_name='+')
+        Teacher, on_delete=models.DO_NOTHING, related_name='examiner')
 
-    supervisor = models.OneToOneField(
-        Teacher, on_delete=models.DO_NOTHING, related_name='+')
+    supervisor = models.ForeignKey(
+        Teacher, on_delete=models.DO_NOTHING, related_name='supervisor')
 
 
 class OTP(models.Model):
