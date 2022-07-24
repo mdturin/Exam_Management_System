@@ -90,8 +90,7 @@ class Routine(models.Model):
     course = models.OneToOneField(
         Course, on_delete=models.DO_NOTHING, related_name='+')
 
-    examiners = models.ForeignKey(
-        Teacher, on_delete=models.DO_NOTHING, related_name='examiner')
+    examiners = models.ManyToManyField(Teacher, related_name='+')
 
     supervisor = models.ForeignKey(
         Teacher, on_delete=models.DO_NOTHING, related_name='supervisor')
