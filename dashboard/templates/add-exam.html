@@ -7,10 +7,11 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">Add Exam</h4>
-          <form class="forms-sample">
+          <form class="forms-sample" method="POST">
+            {% csrf_token %}
             <div class="form-group">
                 <label>Department</label>
-                <select class="js-example-basic-single" style="width:100%">
+                <select class="js-example-basic-single" name="dept" style="width:100%">
                     {% for department in departments %}
                         <option value="{{ department.name }}">{{ department.name }}</option>
                     {% endfor %}
@@ -18,35 +19,35 @@
             </div>
             <div class="form-group">
                 <label>Level</label>
-                <select class="js-example-basic-single" style="width:100%">
+                <select class="js-example-basic-single" name="level" style="width:100%">
                     {% for level in levels %}
-                        <option value="{{ level.name }}">{{ level.name }}</option>
+                        <option value="{{ level }}">{{ level }}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="form-group">
                 <label>Semester</label>
-                <select class="js-example-basic-single" style="width:100%">
+                <select class="js-example-basic-single" name="semester" style="width:100%">
                     {% for semester in semesters %}
-                        <option value="{{ semester.name }}">{{ semester.name }}</option>
+                        <option value="{{ semester }}">{{ semester }}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="form-group">
                 <label>Exam Type</label>
-                <select class="js-example-basic-single" style="width:100%">
+                <select class="js-example-basic-single" name="type" style="width:100%">
                     {% for type in types %}
-                        <option value="{{ type.name }}">{{ type.name }}</option>
+                        <option value="{{ type }}">{{ type }}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="form-group">
                 <label for="num_students" class="js-example-basic-single">Enrolled Students</label>
-                <input type="text" class="form-control" id="num_students" name="num_students" placeholder="0">
+                <input type="text" class="form-control" id="num_students" name="num_students" value="0">
             </div>
             <div class="form-group">
-                <label for="start-date">Start date:</label>
-                <input type="date" id="start-date" name="trip-start" value="" min="" max="">
+                <label for="start_date">Start date:</label>
+                <input type="date" id="start_date" name="start_date" value="" min="" max="">
             </div>
             
             <button type="submit" class="btn btn-primary mr-2">Submit</button>

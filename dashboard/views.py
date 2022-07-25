@@ -124,6 +124,24 @@ def full_routine(request):
 
 def add_exam(request):
     context = get_context(request)
+
+    if request.method == 'POST':
+        dept = request.POST.get('dept', '')
+        level = request.POST.get('level', '')
+        semester = request.POST.get('semester', '')
+        type = request.POST.get('type', '')
+        num_students = request.POST.get('num_students', '')
+        start_date = request.POST.get('start_date', '')
+        faculty = context['faculty']
+
+    LEVEL_CHOICES = ['1', '2', '3', '4']
+    SEMESTER_CHOICES = ['I', 'II']
+    EXAM_TYPES = ['Theory', 'LAB']
+
+    context['levels'] = LEVEL_CHOICES
+    context['semesters'] = SEMESTER_CHOICES
+    context['types'] = EXAM_TYPES
+
     return render(request, 'add-exam.html', context)
 
 
