@@ -86,6 +86,7 @@ def get_context(request):
 
     if context['is_staff']:
         faculty = Faculty.objects.get(name=faculty_name)
+        context['faculty'] = faculty
         context['staffs'] = get_staff(faculty)
         context['courses'] = get_courses(faculty_name)
         context['routines'] = get_routines(faculty)
@@ -127,7 +128,42 @@ def add_exam(request):
 
 
 def add_staff(request):
+
     context = get_context(request)
+
+    if request.method == 'POST':
+        fname = request.POST.get('first_name', '')
+        lname = request.POST.get('last_name', '')
+        email = request.POST.get('email', '')
+        mobile = request.POST.get('mobile', '')
+        picture = request.POST.get('picture')
+        faculty = context['faculty']
+
+        try:
+            with transaction.atomic():
+                user = User(
+                    username=email,
+                    email=email,
+                    first_name=fname,
+                    last_name=lname,
+                )
+
+                user.save()
+
+                staff = Staff.objects.create(
+                    user=user,
+                    contact_number=mobile,
+                    faculty=faculty,
+                )
+
+                staff.profile_picture = get_directory(user.id, picture)
+                staff.save()
+
+        except:
+            return redirect('add-staff')
+
+        return redirect('staff-section')
+
     return render(request, 'add-staff.html', context)
 
 
@@ -144,8 +180,6 @@ def add_teacher(request):
         title = request.POST.get('title', '')
         mobile = request.POST.get('mobile', '')
         picture = request.POST.get('picture')
-
-        print(picture)
         dept = request.POST.get('dept', '')
 
         try:
@@ -186,6 +220,7 @@ def add_teacher(request):
 def edit_teacher(request):
     context = get_context(request)
     return render(request, 'edit-teacher.html', context)
+
 
 def edit_staff(request):
     context = get_context(request)
