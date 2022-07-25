@@ -22,8 +22,9 @@ def get_teachers(faculty_name):
     return supervisors, examiners
 
 
-def CreateRoutine(faculty, department, level, semester, exam_type, num_students, start_date):
-    supervisors, examiners = get_teachers(faculty)
-
-    dept = Department.objects.get(name=department)
-    print(dept, dept.course_set.all())
+def CreateRoutine(
+        faculty_name, department_name, level, semester, exam_type, num_students, start_date):
+    supervisors, examiners = get_teachers(faculty_name)
+    department = Department.objects.get(name=department_name)
+    courses = department.course_set.filter(
+        level=level, semester=semester, is_sessional=exam_type)

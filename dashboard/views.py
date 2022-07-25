@@ -137,7 +137,7 @@ def add_exam(request):
         faculty = context['faculty']
 
         CreateRoutine(faculty, dept, level, semester,
-                      type, num_students, start_date)
+                      type == 'LAB', num_students, start_date)
 
     LEVEL_CHOICES = ['1', '2', '3', '4']
     SEMESTER_CHOICES = ['I', 'II']
