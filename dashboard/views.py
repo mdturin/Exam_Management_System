@@ -1,8 +1,10 @@
-from django.shortcuts import redirect, render
 from account.models import *
-from dashboard.models import *
 from django.contrib.auth.models import User
 from django.db import transaction
+from django.shortcuts import redirect, render
+
+from dashboard.models import *
+from dashboard.routine_creator import *
 
 
 def is_dean(user):
@@ -133,6 +135,9 @@ def add_exam(request):
         num_students = request.POST.get('num_students', '')
         start_date = request.POST.get('start_date', '')
         faculty = context['faculty']
+
+        CreateRoutine(faculty, dept, level, semester,
+                      type, num_students, start_date)
 
     LEVEL_CHOICES = ['1', '2', '3', '4']
     SEMESTER_CHOICES = ['I', 'II']
