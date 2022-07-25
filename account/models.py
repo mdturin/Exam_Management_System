@@ -31,6 +31,8 @@ class Teacher(models.Model):
 
     department = models.ForeignKey(Department, on_delete=models.DO_NOTHING)
 
+    is_available = models.BooleanField(default=True)
+
     def __str__(self) -> str:
         return self.user.first_name + " " + self.user.last_name
 
@@ -41,6 +43,10 @@ class Teacher(models.Model):
     @property
     def get_name(self):
         return self.user.first_name + " " + self.user.last_name
+
+    @property
+    def check_supervisor(self):
+        return self.title == 'Professor' or self.title == 'Associate Professor'
 
 
 class Dean(models.Model):
