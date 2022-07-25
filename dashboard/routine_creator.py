@@ -24,4 +24,6 @@ def get_teachers(faculty_name):
 
 def CreateRoutine(faculty, department, level, semester, exam_type, num_students, start_date):
     supervisors, examiners = get_teachers(faculty)
-    
+
+    dept = Department.objects.get(name=department)
+    print(dept, dept.course_set.all())
