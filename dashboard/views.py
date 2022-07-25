@@ -3,6 +3,8 @@ from account.models import *
 from dashboard.models import *
 from django.contrib.auth.models import User
 from django.db import transaction
+from django.contrib.auth.decorators import login_required
+from .forms import UserUpdateForm, ProfileUpdateForm
 
 
 def is_dean(user):
@@ -181,3 +183,8 @@ def add_teacher(request):
     context['titles'] = TEACHER_TITLE_CHOICES
 
     return render(request, 'add-teacher.html', context)
+
+
+def edit_teacher(request):
+    context = get_context(request)
+    return render(request, 'edit-teacher.html', context)
