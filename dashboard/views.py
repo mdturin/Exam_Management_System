@@ -186,3 +186,7 @@ def add_teacher(request):
 def edit_teacher(request):
     context = get_context(request)
     return render(request, 'edit-teacher.html', context)
+
+def edit_staff(request):
+    context = get_context(request)
+    return render(request, 'edit-staff.html', context)

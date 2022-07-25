@@ -13,4 +13,5 @@ urlpatterns = [
     path('add-staff', add_staff, name='add-staff'),
     path('add-teacher', add_teacher, name='add-teacher'),
     path('edit-teacher', edit_teacher, name='edit-teacher'),
+    path('edit-staff', edit_staff, name='edit-staff'),
 ]
