@@ -53,7 +53,7 @@ def get_courses(faculty):
 
 
 def get_routines(faculty):
-    return list(Routine.objects.filter(faculty=faculty))
+    return list(Exam.objects.filter(faculty=faculty))
 
 
 def get_teachers(faculty):

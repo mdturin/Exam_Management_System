@@ -81,7 +81,7 @@ class Staff(models.Model):
         return self.user.first_name + " " + self.user.last_name
 
 
-class Routine(models.Model):
+class Exam(models.Model):
 
     exam_date = models.DateField()
 
