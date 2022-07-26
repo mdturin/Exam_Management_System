@@ -50,6 +50,7 @@ class Teacher(models.Model):
 
 
 class Dean(models.Model):
+
     teacher = models.OneToOneField(Teacher, on_delete=models.PROTECT)
 
     faculty = models.OneToOneField(Faculty, on_delete=models.PROTECT)
@@ -99,6 +100,13 @@ class Exam(models.Model):
 
     supervisor = models.ForeignKey(
         Teacher, on_delete=models.DO_NOTHING, related_name='supervisor')
+
+
+class Routine(models.Model):
+
+    exams = models.ManyToManyField(Exam, related_name='+')
+
+    is_approved = models.BooleanField(default=False)
 
 
 class OTP(models.Model):
