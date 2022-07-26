@@ -50,3 +50,17 @@ class Course(models.Model):
 
     def __str__(self) -> str:
         return f"{ self.code }"
+
+
+class Event(models.Model):
+
+    name = models.CharField(max_length=255)
+
+    start_date = models.DateField()
+
+    end_date = models.DateField()
+
+    notes = models.TextField(blank=True)
+
+    def __str__(self) -> str:
+        return self.name

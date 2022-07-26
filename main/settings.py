@@ -44,8 +44,8 @@ INTERNAL_IPS = [
 INSTALLED_APPS = [
     'account',
     'dashboard',
-    'widget_tweaks',
     'crispy_forms',
+    'widget_tweaks',
     'debug_toolbar',
 
     'django.contrib.admin',
