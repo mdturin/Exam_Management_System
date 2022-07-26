@@ -1,3 +1,4 @@
+from datetime import date
 from account.models import *
 from django.contrib.auth.models import User
 from django.db import transaction
@@ -81,8 +82,8 @@ def get_context(request):
 
     context = {
         'is_staff': (staff != None or dean != None),
-        'if_staff': staff,
-        'if_dean': dean,
+        'if_staff': staff is not None,
+        'if_dean': dean is not None,
         'user': staff or teacher
     }
 
@@ -95,6 +96,11 @@ def get_context(request):
         context['teachers'] = get_teachers(faculty_name)
         context['departments'] = list(
             Department.objects.filter(faculty=faculty))
+
+        year = date.today().year
+        context['year'] = year
+        context['events'] = Event.objects.filter(
+            start_date__year=year).all()
 
     return context
 
@@ -117,6 +123,11 @@ def staff_page(request):
 def routine_page(request):
     context = get_context(request)
     return render(request, 'routine-section.html', context)
+
+
+def event_page(request):
+    context = get_context(request)
+    return render(request, 'event-section.html', context)
 
 
 def full_routine(request):

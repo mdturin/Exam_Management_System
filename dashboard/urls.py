@@ -8,6 +8,7 @@ urlpatterns = [
     path('teacher-section', teacher_page, name='teacher-section'),
     path('staff-section', staff_page, name='staff-section'),
     path('routine-section', routine_page, name='routine-section'),
+    path('event-section', event_page, name='event-section'),
     path('full-routine', full_routine, name='full-routine'),
     path('add-routine', add_routine, name='add-routine'),
     path('add-staff', add_staff, name='add-staff'),

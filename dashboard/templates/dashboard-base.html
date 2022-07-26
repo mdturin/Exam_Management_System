@@ -63,12 +63,6 @@
                     {{ user.user.first_name }} {{ user.user.last_name }}
                   </h5>
                   <span>
-                    <!-- {% for staff in staffs %}
-                      {{ staff.user }}
-                      <br>
-                    {% endfor %}
-                    {{ user.user }} -->
-
                     {% if if_staff %}
                       Staff
                     {% elif if_dean %}
@@ -120,6 +114,14 @@
               <span class="menu-title">Routine Section</span>
             </a>
           </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'event-section' %}">
+              <span class="menu-icon">
+                <i class="mdi mdi-chart-bar"></i>
+              </span>
+              <span class="menu-title">Event Section</span>
+            </a>
+          </li>
           {% endif %}
         </ul>
       </nav>
@@ -150,7 +152,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    placeholder="Search products"
+                    placeholder="Search events"
                   />
                 </form>
               </li>
