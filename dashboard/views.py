@@ -124,7 +124,7 @@ def full_routine(request):
     return render(request, 'full-routine.html', context)
 
 
-def add_exam(request):
+def add_routine(request):
     context = get_context(request)
 
     if request.method == 'POST':
@@ -147,7 +147,7 @@ def add_exam(request):
     context['semesters'] = SEMESTER_CHOICES
     context['types'] = EXAM_TYPES
 
-    return render(request, 'add-exam.html', context)
+    return render(request, 'add-routine.html', context)
 
 
 def add_staff(request):
