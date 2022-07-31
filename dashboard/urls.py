@@ -1,4 +1,5 @@
 from django.contrib.auth.views import LoginView, LogoutView, TemplateView
+
 from django.urls import path
 
 from dashboard.views import *
@@ -15,4 +16,5 @@ urlpatterns = [
     path('add-teacher', add_teacher, name='add-teacher'),
     path('edit-teacher', edit_teacher, name='edit-teacher'),
     path('edit-staff', edit_staff, name='edit-staff'),
+    path('delete/<pk>', TeacherDeleteView.as_view(), name='delete-teacher'),
 ]

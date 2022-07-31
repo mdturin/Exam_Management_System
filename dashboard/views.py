@@ -3,7 +3,8 @@ from account.models import *
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.shortcuts import redirect, render
-
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView
 from dashboard.models import *
 from dashboard.routine_creator import *
 
@@ -259,3 +260,8 @@ def edit_teacher(request):
 def edit_staff(request):
     context = get_context(request)
     return render(request, 'edit-staff.html', context)
+
+class TeacherDeleteView(DeleteView):
+    model = Teacher
+    success_url = '/'
+    template_name = 'teacher_confirm_delete.html'

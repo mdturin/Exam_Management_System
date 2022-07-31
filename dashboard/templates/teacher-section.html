@@ -39,7 +39,11 @@
                           Edit
                         </a>
                       </td>
-                      <td><button class="btn btn-danger">Delete</button></td>
+                      <td>
+                        <a class="nav-link btn btn-danger create-new-button"  href="{% url 'delete-teacher' teacher.user_id %}" >
+                          Delete
+                        </a>
+                      </td>
                     </tr>
                   {% endif %}
                 {% endfor %}
