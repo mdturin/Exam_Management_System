@@ -34,7 +34,11 @@
                           Edit
                         </a>
                       </td>
-                      <td><button class="btn btn-danger">Delete</button></td>
+                      <td>
+                        <a class="nav-link btn btn-danger create-new-button"  href="{% url 'delete-staff' staff.user_id %}" >
+                          Delete
+                        </a>
+                      </td>
                     </tr>
                 {% endfor %}
             </tbody>

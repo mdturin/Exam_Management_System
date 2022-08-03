@@ -265,3 +265,8 @@ class TeacherDeleteView(DeleteView):
     model = Teacher
     success_url = '/'
     template_name = 'teacher_confirm_delete.html'
+
+class StaffDeleteView(DeleteView):
+    model = Staff
+    success_url = '/'
+    template_name = 'staff_confirm_delete.html'
