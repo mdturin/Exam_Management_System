@@ -120,6 +120,9 @@ def staff_page(request):
     context = get_context(request)
     return render(request, 'staff-section.html', context)
 
+def course_page(request):
+    context = get_context(request)
+    return render(request, 'course-section.html', context)
 
 def routine_page(request):
     context = get_context(request)
