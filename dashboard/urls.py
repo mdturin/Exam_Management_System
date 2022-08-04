@@ -19,6 +19,7 @@ urlpatterns = [
     path('add-event', add_event, name='add-event'),
     path('edit-teacher', edit_teacher, name='edit-teacher'),
     path('edit-staff', edit_staff, name='edit-staff'),
+    path('edit-event', edit_event, name='edit-event'),
     path('delete-teacher/<pk>', TeacherDeleteView.as_view(), name='delete-teacher'),
     path('delete-staff/<pk>', StaffDeleteView.as_view(), name='delete-staff'),
 ]
