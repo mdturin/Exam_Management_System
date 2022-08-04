@@ -22,4 +22,5 @@ urlpatterns = [
     path('edit-event', edit_event, name='edit-event'),
     path('delete-teacher/<pk>', TeacherDeleteView.as_view(), name='delete-teacher'),
     path('delete-staff/<pk>', StaffDeleteView.as_view(), name='delete-staff'),
+    path('delete-event/<pk>', EventDeleteView.as_view(), name='delete-event'),
 ]

@@ -279,6 +279,10 @@ class StaffDeleteView(DeleteView):
     success_url = '/'
     template_name = 'staff_confirm_delete.html'
 
+class EventDeleteView(DeleteView):
+    model = Event
+    success_url = '/'
+    template_name = 'event_confirm_delete.html'
 
 
 def add_event(request):
