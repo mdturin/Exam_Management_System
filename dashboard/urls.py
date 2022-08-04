@@ -16,6 +16,7 @@ urlpatterns = [
     path('add-routine', add_routine, name='add-routine'),
     path('add-staff', add_staff, name='add-staff'),
     path('add-teacher', add_teacher, name='add-teacher'),
+    path('add-event', add_event, name='add-event'),
     path('edit-teacher', edit_teacher, name='edit-teacher'),
     path('edit-staff', edit_staff, name='edit-staff'),
     path('delete-teacher/<pk>', TeacherDeleteView.as_view(), name='delete-teacher'),

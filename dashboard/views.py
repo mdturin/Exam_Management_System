@@ -278,3 +278,23 @@ class StaffDeleteView(DeleteView):
     model = Staff
     success_url = '/'
     template_name = 'staff_confirm_delete.html'
+
+
+
+def add_event(request):
+    context = get_context(request)
+    
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        start_date = request.POST.get('start_date', '')
+        end_date = request.POST.get('end_date', '')
+        notes = request.POST.get('notes', '')
+        event = Event.objects.create(
+                    name=name,
+                    start_date=start_date,
+                    end_date=end_date,
+                    notes = notes,
+                )
+        event.save()
+        return render(request, 'event-section.html', context)
+    return render(request, 'add-event.html', context)
