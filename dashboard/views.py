@@ -85,7 +85,8 @@ def get_context(request):
         'is_staff': (staff != None or dean != None),
         'if_staff': staff is not None,
         'if_dean': dean is not None,
-        'user': staff or teacher
+        'user': staff or teacher,
+
     }
 
     if context['is_staff']:
@@ -132,6 +133,10 @@ def routine_page(request):
 def event_page(request):
     context = get_context(request)
     return render(request, 'event-section.html', context)
+
+def profile_page(request):
+    context = get_context(request)
+    return render(request, 'profile-section.html', context)
 
 
 def full_routine(request):

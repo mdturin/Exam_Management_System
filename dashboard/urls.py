@@ -8,6 +8,7 @@ urlpatterns = [
     path('', dashboard, name='dashboard-page'),
     path('teacher-section', teacher_page, name='teacher-section'),
     path('staff-section', staff_page, name='staff-section'),
+    path('profile-section', profile_page, name='profile-section'),
     path('course-section', course_page, name='course-section'),
     path('routine-section', routine_page, name='routine-section'),
     path('event-section', event_page, name='event-section'),
