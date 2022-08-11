@@ -16,6 +16,10 @@ def get_profile_pictures_directory(self: 'Teacher', filename: str):
     return f'img/pp/{self.user_id}_{filename}'
 
 
+def cmp(x, y):
+    return (x > y) - (x < y)
+
+
 class Teacher(models.Model):
 
     user = models.OneToOneField(
@@ -38,6 +42,12 @@ class Teacher(models.Model):
 
     def __str__(self) -> str:
         return self.user.first_name + " " + self.user.last_name
+
+    def __cmp__(self, __o: 'Teacher') -> int:
+        return cmp(self.total_creadits, __o.total_creadits)
+
+    def __lt__(self, __o: 'Teacher') -> bool:
+        return (self.total_creadits < __o.total_creadits)
 
     @property
     def get_instance(self):

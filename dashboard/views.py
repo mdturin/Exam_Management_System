@@ -121,9 +121,11 @@ def staff_page(request):
     context = get_context(request)
     return render(request, 'staff-section.html', context)
 
+
 def course_page(request):
     context = get_context(request)
     return render(request, 'course-section.html', context)
+
 
 def routine_page(request):
     context = get_context(request)
@@ -133,6 +135,7 @@ def routine_page(request):
 def event_page(request):
     context = get_context(request)
     return render(request, 'event-section.html', context)
+
 
 def profile_page(request):
     context = get_context(request)
@@ -269,15 +272,18 @@ def edit_staff(request):
     context = get_context(request)
     return render(request, 'edit-staff.html', context)
 
+
 class TeacherDeleteView(DeleteView):
     model = Teacher
     success_url = '/'
     template_name = 'teacher_confirm_delete.html'
 
+
 class StaffDeleteView(DeleteView):
     model = Staff
     success_url = '/'
     template_name = 'staff_confirm_delete.html'
+
 
 class EventDeleteView(DeleteView):
     model = Event
@@ -287,36 +293,37 @@ class EventDeleteView(DeleteView):
 
 def add_event(request):
     context = get_context(request)
-    
+
     if request.method == 'POST':
         name = request.POST.get('name', '')
         start_date = request.POST.get('start_date', '')
         end_date = request.POST.get('end_date', '')
         notes = request.POST.get('notes', '')
         event = Event.objects.create(
-                    name=name,
-                    start_date=start_date,
-                    end_date=end_date,
-                    notes = notes,
-                )
+            name=name,
+            start_date=start_date,
+            end_date=end_date,
+            notes=notes,
+        )
         event.save()
         return render(request, 'event-section.html', context)
     return render(request, 'add-event.html', context)
 
+
 def edit_event(request):
     context = get_context(request)
-    
+
     if request.method == 'POST':
         name = request.POST.get('name', '')
         start_date = request.POST.get('start_date', '')
         end_date = request.POST.get('end_date', '')
         notes = request.POST.get('notes', '')
         event = Event.objects.create(
-                    name=name,
-                    start_date=start_date,
-                    end_date=end_date,
-                    notes = notes,
-                )
+            name=name,
+            start_date=start_date,
+            end_date=end_date,
+            notes=notes,
+        )
         event.save()
         return render(request, 'event-section.html', context)
     return render(request, 'add-event.html', context)
