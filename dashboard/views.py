@@ -160,7 +160,9 @@ def add_routine(request):
         faculty = context['faculty']
 
         CreateRoutine(faculty, dept, level, semester,
-                      type == 'LAB', num_students, start_date)
+                      type == 'LAB', int(num_students), start_date)
+
+        return redirect('routine-section')
 
     LEVEL_CHOICES = ['1', '2', '3', '4']
     SEMESTER_CHOICES = ['I', 'II']

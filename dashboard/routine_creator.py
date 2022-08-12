@@ -21,6 +21,9 @@ def get_teachers(faculty_name):
         else:
             examiners.append(teacher)
 
+    examiners = sorted(examiners, key=lambda t: t.total_creadits)
+    supervisors = sorted(supervisors, key=lambda t: t.total_creadits)
+
     return supervisors, examiners
 
 
@@ -83,8 +86,8 @@ def get_best_info(start_date, courses):
             end_date = get_end_date(
                 cur_date, room.room_no, shift.time, courses)
             if (not best_end_date) or (best_end_date > end_date):
-                best_room = room
-                best_shift = shift
+                best_room = room.room_no
+                best_shift = shift.time
                 best_end_date = end_date
 
     return best_room, best_shift
@@ -93,6 +96,7 @@ def get_best_info(start_date, courses):
 def CreateRoutine(
         faculty_name, department_name, level, semester, exam_type, num_students, date_str):
 
+    faculty = Faculty.objects.get(name=faculty_name)
     supervisors, examiners = get_teachers(faculty_name)
     department = Department.objects.get(name=department_name)
 
@@ -101,7 +105,43 @@ def CreateRoutine(
 
     routine = Routine()
     routine.is_approved = False
+    routine.save()
+
     start_date = get_date(date_str)
     room, shift = get_best_info(start_date, courses)
 
-    print(room, shift)
+    cur_date = get_date(date_str)
+    need_examiners = max(2, (num_students+10) / 15)
+
+    for course in courses:
+
+        exam = Exam()
+
+        cur_date = get_available_date(cur_date, room, shift)
+        exam.exam_date = cur_date
+        cur_date = get_next_date(cur_date, (int)(course.credits))
+
+        exam.exam_time = shift
+
+        exam.room_number = room
+
+        exam.faculty = faculty
+
+        exam.course = course
+
+        exam.supervisor = supervisors[0]
+
+        supervisors[0].total_creadits += course.credits
+
+        exam.save()
+
+        for _ in range(need_examiners):
+            exam.examiners.add(examiners[_])
+            examiners[_].total_creadits += course.credits
+
+        routine.exams.add(exam)
+
+        examiners = sorted(examiners, key=lambda t: t.total_creadits)
+        supervisors = sorted(supervisors, key=lambda t: t.total_creadits)
+
+    routine.save()

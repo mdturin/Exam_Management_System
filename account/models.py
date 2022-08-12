@@ -96,7 +96,7 @@ class Exam(models.Model):
     faculty = models.ForeignKey(
         Faculty, on_delete=models.DO_NOTHING, related_name='+')
 
-    course = models.OneToOneField(
+    course = models.ForeignKey(
         Course, on_delete=models.DO_NOTHING, related_name='+')
 
     examiners = models.ManyToManyField(Teacher, related_name='+')
