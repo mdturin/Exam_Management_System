@@ -1,8 +1,6 @@
-from ast import Or
 import datetime
 
 from account.models import *
-from ordered_set import OrderedSet
 
 from dashboard.models import *
 
@@ -59,11 +57,6 @@ def CreateRoutine(
         faculty_name, department_name, level, semester, exam_type, num_students, date_str):
 
     supervisors, examiners = get_teachers(faculty_name)
-
-    supervisor_set = OrderedSet(supervisors)
-    print(supervisor_set[0].total_creadits)
-    print(supervisor_set[1].total_creadits)
-
     department = Department.objects.get(name=department_name)
 
     courses = department.course_set.filter(
@@ -74,6 +67,4 @@ def CreateRoutine(
 
     cur_date = get_date(date_str)
 
-    for _ in range(5):
-        cur_date = get_available_date(cur_date)
-        cur_date = get_next_date(cur_date)
+    

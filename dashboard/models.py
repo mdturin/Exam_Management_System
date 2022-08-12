@@ -64,3 +64,17 @@ class Event(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class Room(models.Model):
+    room_no = models.IntegerField()
+
+    def __str__(self) -> str:
+        return str(self.room_no)
+
+
+class Shift(models.Model):
+    time = models.TimeField()
+
+    def __str__(self) -> str:
+        return str(self.time)
