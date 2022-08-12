@@ -28,15 +28,19 @@ def get_date(date_str):
     return datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
 
 
-def get_next_date(cur_date):
-    return cur_date + datetime.timedelta(days=1)
+def get_next_date(cur_date, delta=1):
+    return cur_date + datetime.timedelta(days=delta)
 
 
 def get_next_events(cur_date):
     return Event.objects.filter(start_date__lte=cur_date, end_date__gte=cur_date).all()
 
 
-def get_available_date(cur_date):
+def get_next_exams(cur_date, room, shift):
+    return Exam.objects.filter(exam_date=cur_date, room_number=room, exam_time=shift).all()
+
+
+def get_available_date(cur_date, room, shift):
 
     if cur_date.weekday() == 4:
         cur_date = get_next_date(cur_date)
@@ -45,12 +49,45 @@ def get_available_date(cur_date):
         cur_date = get_next_date(cur_date)
 
     events = get_next_events(cur_date)
-    if len(events) == 0:
+    exams = get_next_exams(cur_date, room, shift)
+    if len(events) == 0 and len(exams) == 0:
         return cur_date
 
-    cur_date = events[0].end_date
+    if len(events) != 0:
+        cur_date = events[0].end_date
     cur_date = get_next_date(cur_date)
-    return get_available_date(cur_date)
+
+    return get_available_date(cur_date, room, shift)
+
+
+def get_end_date(cur_date, room, shift, courses: Course):
+
+    for _ in range(len(courses)):
+        cur_date = get_available_date(cur_date, room, shift)
+        cur_date = get_next_date(cur_date, (int)(courses[_].credits))
+
+    return cur_date
+
+
+def get_best_info(start_date, courses):
+    rooms = Room.objects.all()
+    shifts = Shift.objects.all()
+
+    best_room = None
+    best_shift = None
+    best_end_date = None
+
+    for room in rooms:
+        for shift in shifts:
+            cur_date = start_date
+            end_date = get_end_date(
+                cur_date, room.room_no, shift.time, courses)
+            if (not best_end_date) or (best_end_date > end_date):
+                best_room = room
+                best_shift = shift
+                best_end_date = end_date
+
+    return best_room, best_shift
 
 
 def CreateRoutine(
@@ -64,7 +101,7 @@ def CreateRoutine(
 
     routine = Routine()
     routine.is_approved = False
+    start_date = get_date(date_str)
+    room, shift = get_best_info(start_date, courses)
 
-    cur_date = get_date(date_str)
-
-    
+    print(room, shift)

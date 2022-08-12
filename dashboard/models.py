@@ -77,4 +77,4 @@ class Shift(models.Model):
     time = models.TimeField()
 
     def __str__(self) -> str:
-        return str(self.time)
+        return self.time.strftime("%H:%M:%S")
