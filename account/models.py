@@ -114,8 +114,8 @@ class Exam(models.Model):
     supervisor = models.ForeignKey(
         Teacher, on_delete=models.DO_NOTHING, related_name='supervisor')
 
-    # routine = models.ForeignKey(
-    #     Routine, on_delete=models.CASCADE, null=False)
+    routine = models.ForeignKey(
+        Routine, on_delete=models.CASCADE, null=False, default=1)
 
 
 class OTP(models.Model):
