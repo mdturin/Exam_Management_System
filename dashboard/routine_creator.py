@@ -93,8 +93,7 @@ def get_best_info(start_date, courses):
     return best_room, best_shift
 
 
-def CreateRoutine(
-        faculty_name, department_name, level, semester, exam_type, num_students, date_str):
+def CreateRoutine(routine_name, faculty_name, department_name, level, semester, exam_type, num_students, date_str):
 
     faculty = Faculty.objects.get(name=faculty_name)
     supervisors, examiners = get_teachers(faculty_name)
@@ -104,6 +103,7 @@ def CreateRoutine(
         level=level, semester=semester, is_sessional=exam_type)
 
     routine = Routine()
+    routine.name = routine_name
     routine.is_approved = False
     routine.save()
 
@@ -133,15 +133,13 @@ def CreateRoutine(
 
         supervisors[0].total_creadits += course.credits
 
+        exam.routine = routine
+
         exam.save()
 
         for _ in range(need_examiners):
             exam.examiners.add(examiners[_])
             examiners[_].total_creadits += course.credits
 
-        routine.exams.add(exam)
-
         examiners = sorted(examiners, key=lambda t: t.total_creadits)
         supervisors = sorted(supervisors, key=lambda t: t.total_creadits)
-
-    routine.save()

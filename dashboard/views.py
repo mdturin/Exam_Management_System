@@ -78,7 +78,7 @@ def get_exams(approved_routines, teacher=None):
 
     today = date.today()
     for routine in approved_routines:
-        exams = routine.exams.all()
+        exams = routine.exam_set.all()
         if teacher:
             exams = filter(lambda exam: teacher in exam.examiners.all()
                            or teacher == exam.supervisor, exams)
@@ -185,6 +185,7 @@ def add_routine(request):
     context = get_context(request)
 
     if request.method == 'POST':
+        name = request.POST.get('name', '')
         dept = request.POST.get('dept', '')
         level = request.POST.get('level', '')
         semester = request.POST.get('semester', '')
@@ -193,7 +194,7 @@ def add_routine(request):
         start_date = request.POST.get('start_date', '')
         faculty = context['faculty']
 
-        CreateRoutine(faculty, dept, level, semester,
+        CreateRoutine(name, faculty, dept, level, semester,
                       type == 'LAB', int(num_students), start_date)
 
         return redirect('routine-section')

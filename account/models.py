@@ -117,6 +117,9 @@ class Exam(models.Model):
     routine = models.ForeignKey(
         Routine, on_delete=models.CASCADE, null=False, default=1)
 
+    def __str__(self) -> str:
+        return self.course
+
 
 class OTP(models.Model):
 
