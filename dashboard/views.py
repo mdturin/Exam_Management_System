@@ -93,7 +93,7 @@ def get_exams(approved_routines, teacher=None):
     return current, past, upcomming
 
 
-def get_context(request, full_routine=None):
+def get_context(request, full_routine=False):
     faculty_name = None
     dean = is_dean(request.user)
     staff = is_staff(request.user)
@@ -131,7 +131,7 @@ def get_context(request, full_routine=None):
         context['events'] = Event.objects.filter(
             start_date__year=year).all()
 
-    else:
+    elif not full_routine:
         approved_routines = Routine.objects.filter(is_approved=True).all()
         current, past, upcomming = get_exams(approved_routines, teacher)
         context['current_exams'] = current

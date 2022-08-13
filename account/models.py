@@ -118,7 +118,7 @@ class Exam(models.Model):
         Routine, on_delete=models.CASCADE, null=False, default=1)
 
     def __str__(self) -> str:
-        return self.course
+        return f"{self.course.code}"
 
 
 class OTP(models.Model):
