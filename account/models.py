@@ -85,6 +85,16 @@ class Staff(models.Model):
         return self.user.first_name + " " + self.user.last_name
 
 
+class Routine(models.Model):
+
+    name = models.CharField(max_length=255, null=False)
+
+    is_approved = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class Exam(models.Model):
 
     exam_date = models.DateField()
@@ -104,12 +114,8 @@ class Exam(models.Model):
     supervisor = models.ForeignKey(
         Teacher, on_delete=models.DO_NOTHING, related_name='supervisor')
 
-
-class Routine(models.Model):
-
-    exams = models.ManyToManyField(Exam, related_name='+')
-
-    is_approved = models.BooleanField(default=False)
+    # routine = models.ForeignKey(
+    #     Routine, on_delete=models.CASCADE, null=False)
 
 
 class OTP(models.Model):
