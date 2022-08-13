@@ -22,16 +22,16 @@
               </tr>
             </thead>
             <tbody>
-              {% for routine in routines %}
+              {% for exam in current_exams %}
               <tr>
-                <td>{{ routine.exam_date }}</td>
-                <td>{{ routine.exam_time }}</td>
-                <td>{{ routine.room_number }}</td>
-                <td>{{ routine.course }}</td>
-                <td>{{ routine.supervisor }}</td>
+                <td>{{ exam.exam_date }}</td>
+                <td>{{ exam.exam_time }}</td>
+                <td>{{ exam.room_number }}</td>
+                <td>{{ exam.course }}</td>
+                <td>{{ exam.supervisor }}</td>
                 <td>
-                  {% for teacher in routine.examiners.all %}
-                    <p> {{ teacher }} </p>
+                  {% for teacher in exam.examiners.all %}
+                  <p> {{ teacher }} </p>
                   {% endfor %}
                 </td>
               </tr>
@@ -63,16 +63,16 @@
               </tr>
             </thead>
             <tbody>
-              {% for routine in routines %}
+              {% for exam in upcomming_exams %}
               <tr>
-                <td>{{ routine.exam_date }}</td>
-                <td>{{ routine.exam_time }}</td>
-                <td>{{ routine.room_number }}</td>
-                <td>{{ routine.course }}</td>
-                <td>{{ routine.supervisor }}</td>
+                <td>{{ exam.exam_date }}</td>
+                <td>{{ exam.exam_time }}</td>
+                <td>{{ exam.room_number }}</td>
+                <td>{{ exam.course }}</td>
+                <td>{{ exam.supervisor }}</td>
                 <td>
-                  {% for teacher in routine.examiners.all %}
-                    <p> {{ teacher }} </p>
+                  {% for teacher in exam.examiners.all %}
+                  <p> {{ teacher }} </p>
                   {% endfor %}
                 </td>
               </tr>
@@ -104,16 +104,16 @@
               </tr>
             </thead>
             <tbody>
-              {% for routine in routines %}
+              {% for exam in past_exams %}
               <tr>
-                <td>{{ routine.exam_date }}</td>
-                <td>{{ routine.exam_time }}</td>
-                <td>{{ routine.room_number }}</td>
-                <td>{{ routine.course }}</td>
-                <td>{{ routine.supervisor }}</td>
+                <td>{{ exam.exam_date }}</td>
+                <td>{{ exam.exam_time }}</td>
+                <td>{{ exam.room_number }}</td>
+                <td>{{ exam.course }}</td>
+                <td>{{ exam.supervisor }}</td>
                 <td>
-                  {% for teacher in routine.examiners.all %}
-                    <p> {{ teacher }} </p>
+                  {% for teacher in exam.examiners.all %}
+                  <p> {{ teacher }} </p>
                   {% endfor %}
                 </td>
               </tr>

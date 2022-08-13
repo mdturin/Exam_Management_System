@@ -1,10 +1,11 @@
 from datetime import date
+
 from account.models import *
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
+
 from dashboard.models import *
 from dashboard.routine_creator import *
 
@@ -70,7 +71,29 @@ def get_teachers(faculty):
     return selected_teachers
 
 
-def get_context(request):
+def get_exams(approved_routines, teacher=None):
+    past = []
+    current = []
+    upcomming = []
+
+    today = date.today()
+    for routine in approved_routines:
+        exams = routine.exams.all()
+        if teacher:
+            exams = filter(lambda exam: teacher in exam.examiners.all()
+                           or teacher == exam.supervisor, exams)
+        for exam in exams:
+            if exam.exam_date == today:
+                current.append(exam)
+            elif exam.exam_date < today:
+                past.append(exam)
+            else:
+                upcomming.append(exam)
+
+    return current, past, upcomming
+
+
+def get_context(request, full_routine=None):
     faculty_name = None
     dean = is_dean(request.user)
     staff = is_staff(request.user)
@@ -86,23 +109,34 @@ def get_context(request):
         'if_staff': staff is not None,
         'if_dean': dean is not None,
         'user': staff or teacher,
-
     }
+
+    if context['is_staff'] or full_routine:
+        approved_routines = Routine.objects.filter(is_approved=True).all()
+        current, past, upcomming = get_exams(approved_routines)
+        context['current_exams'] = current
+        context['past_exams'] = past
+        context['upcomming_exams'] = upcomming
 
     if context['is_staff']:
         faculty = Faculty.objects.get(name=faculty_name)
         context['faculty'] = faculty
         context['staffs'] = get_staff(faculty)
         context['courses'] = get_courses(faculty_name)
-        context['routines'] = get_routines(faculty)
         context['teachers'] = get_teachers(faculty_name)
         context['departments'] = list(
             Department.objects.filter(faculty=faculty))
-
         year = date.today().year
         context['year'] = year
         context['events'] = Event.objects.filter(
             start_date__year=year).all()
+
+    else:
+        approved_routines = Routine.objects.filter(is_approved=True).all()
+        current, past, upcomming = get_exams(approved_routines, teacher)
+        context['current_exams'] = current
+        context['past_exams'] = past
+        context['upcomming_exams'] = upcomming
 
     return context
 
@@ -143,7 +177,7 @@ def profile_page(request):
 
 
 def full_routine(request):
-    context = get_context(request)
+    context = get_context(request, True)
     return render(request, 'full-routine.html', context)
 
 
