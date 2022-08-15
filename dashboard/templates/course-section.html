@@ -3,7 +3,11 @@
 {% block content %}
 
 <h1>Course Section</h1>
-
+<div class="create-new">
+  <a class="nav-link btn btn-success create-new-button"  href="{% url 'add-course' %}" >
+    Add Course
+  </a>
+</div>
 
 <!-- Available Courses -->
   <div class="row">
@@ -37,6 +41,16 @@
                       {% else %}
                         Theory
                       {% endif %}
+                    </td>
+                    <td>
+                      <a class="nav-link btn btn-warning create-new-button"  href="{% url 'edit-course' %}" >
+                        Edit
+                      </a>
+                    </td>
+                    <td>
+                      <a class="nav-link btn btn-danger create-new-button"  href="{% url 'delete-course' course.id %}" >
+                        Delete
+                      </a>
                     </td>
                   </tr>
                 {% endfor %}

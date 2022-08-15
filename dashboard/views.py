@@ -327,6 +327,10 @@ class EventDeleteView(DeleteView):
     success_url = '/'
     template_name = 'event_confirm_delete.html'
 
+class CourseDeleteView(DeleteView):
+    model = Course
+    success_url = '/'
+    template_name = 'course_confirm_delete.html'
 
 def add_event(request):
     context = get_context(request)
@@ -364,3 +368,44 @@ def edit_event(request):
         event.save()
         return render(request, 'event-section.html', context)
     return render(request, 'add-event.html', context)
+
+def add_course(request):
+    context = get_context(request)
+
+    if request.method == 'POST':
+        level = request.POST.get('level', '')
+        semester = request.POST.get('semester', '')
+        code = request.POST.get('code', '')
+        course_title = request.POST.get('name', '')
+        credit = request.POST.get('credits', '')
+        course_type = request.POST.get('is_sessional', '')
+        course = Course.objects.create(
+            level=level,
+            semester=semester,
+            code=code,
+            name=course_title,
+            credits=credit,
+            is_sessional=course_type,
+        )
+        course.save()
+        return render(request, 'course-section.html', context)
+    return render(request, 'add-course.html', context)
+
+
+def edit_course(request):
+    context = get_context(request)
+
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        start_date = request.POST.get('start_date', '')
+        end_date = request.POST.get('end_date', '')
+        notes = request.POST.get('notes', '')
+        event = Event.objects.create(
+            name=name,
+            start_date=start_date,
+            end_date=end_date,
+            notes=notes,
+        )
+        event.save()
+        return render(request, 'course-section.html', context)
+    return render(request, 'edit-course.html', context)

@@ -17,10 +17,13 @@ urlpatterns = [
     path('add-staff', add_staff, name='add-staff'),
     path('add-teacher', add_teacher, name='add-teacher'),
     path('add-event', add_event, name='add-event'),
+    path('add-course', add_course, name='add-course'),
     path('edit-teacher', edit_teacher, name='edit-teacher'),
     path('edit-staff', edit_staff, name='edit-staff'),
     path('edit-event', edit_event, name='edit-event'),
+    path('edit-course', edit_course, name='edit-course'),
     path('delete-teacher/<pk>', TeacherDeleteView.as_view(), name='delete-teacher'),
     path('delete-staff/<pk>', StaffDeleteView.as_view(), name='delete-staff'),
     path('delete-event/<pk>', EventDeleteView.as_view(), name='delete-event'),
+    path('delete-course/<pk>', CourseDeleteView.as_view(), name='delete-course'),
 ]
