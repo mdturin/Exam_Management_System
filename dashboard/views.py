@@ -536,7 +536,6 @@ def search_page(request):
     new_context['user'] = context['user']
     new_context['notifications'] = context['notifications']
     new_context['faculty'] = context['faculty']
-    new_context['departments'] = context['departments']
 
     data_found = False
     if request.method == 'POST':
@@ -548,7 +547,11 @@ def search_page(request):
                     data_found = True
                     new_context[key] = new_value
 
+    departments = set()
+    for teacher in new_context['teachers']:
+        departments.add(teacher.department)
+
+    new_context['departments'] = list(departments)
     new_context['data_found'] = data_found
-    print(context)
-    print(new_context)
+
     return render(request, 'search-page.html', new_context)
