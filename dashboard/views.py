@@ -501,6 +501,8 @@ def search_teacher(teacher: Teacher, key: str):
         return True
     if key in str(teacher.contact_number).lower():
         return True
+    if key in str(teacher.user).lower():
+        return True
 
     return False
 
@@ -548,7 +550,7 @@ def search_page(request):
                     new_context[key] = new_value
 
     departments = set()
-    for teacher in new_context['teachers']:
+    for teacher in new_context.get('teachers', []):
         departments.add(teacher.department)
 
     new_context['departments'] = list(departments)
