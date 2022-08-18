@@ -489,6 +489,22 @@ def search_course(course: Course, key: str):
     return False
 
 
+def search_teacher(teacher: Teacher, key: str):
+
+    key = key.lower()
+
+    if key in str(teacher.get_name).lower():
+        return True
+    if key in str(teacher.title).lower():
+        return True
+    if key in str(teacher.department).lower():
+        return True
+    if key in str(teacher.contact_number).lower():
+        return True
+
+    return False
+
+
 def get_searched_value(value, key):
     if isinstance(value, list):
         new_value = []
@@ -498,6 +514,9 @@ def get_searched_value(value, key):
                     new_value.append(v)
             elif isinstance(v, Course):
                 if search_course(v, key):
+                    new_value.append(v)
+            elif isinstance(v, Teacher):
+                if search_teacher(v, key):
                     new_value.append(v)
             elif re.search(key, str(v), re.IGNORECASE):
                 new_value.append(value)
@@ -517,18 +536,19 @@ def search_page(request):
     new_context['user'] = context['user']
     new_context['notifications'] = context['notifications']
     new_context['faculty'] = context['faculty']
+    new_context['departments'] = context['departments']
 
     data_found = False
     if request.method == 'POST':
         if 'search' in request.POST:
             search = request.POST.get('search', '')
             for key, value in context.items():
-                print(key, value)
                 new_value = get_searched_value(value, search)
                 if new_value:
                     data_found = True
                     new_context[key] = new_value
 
     new_context['data_found'] = data_found
+    print(context)
     print(new_context)
     return render(request, 'search-page.html', new_context)
