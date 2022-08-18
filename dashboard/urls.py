@@ -31,4 +31,5 @@ urlpatterns = [
     path('approve-routine/<int:pk>', approve_routine_view, name='approve-routine'),
     path('reject-routine/<int:pk>', reject_routine_view, name='reject-routine'),
     path('notification/<int:pk>', marked_notification, name='marked-notification'),
+    path('search', search_page, name='search-page'),
 ]

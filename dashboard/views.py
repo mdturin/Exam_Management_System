@@ -1,5 +1,6 @@
 from datetime import date
 
+import re
 from account.models import *
 from django.contrib.auth.models import User
 from django.db import transaction
@@ -114,7 +115,7 @@ def get_context(request, full_routine=False):
         'if_staff': staff is not None,
         'if_dean': dean is not None,
         'user': staff or teacher,
-        'notifications': get_notification(user),
+        'notifications': list(get_notification(user)),
     }
 
     if context['is_staff'] or full_routine:
@@ -448,3 +449,86 @@ def marked_notification(request, pk):
     notification.marked_read = True
     notification.save()
     return redirect('dashboard-page')
+
+
+def search_exam(exam: Exam, key: str):
+
+    key = key.lower()
+
+    if key in str(exam.room_number):
+        return True
+    if key in str(exam.course).lower():
+        return True
+    if key in str(exam.supervisor).lower():
+        return True
+
+    for teacher in exam.examiners.all():
+        if key in teacher.get_name.lower():
+            return True
+
+    return False
+
+
+def search_course(course: Course, key: str):
+
+    key = key.lower()
+
+    if key in str(course.code).lower():
+        return True
+    if key in str(course.credits).lower():
+        return True
+    if key in str(course.department).lower():
+        return True
+    if key in str(course.level).lower():
+        return True
+    if key in str(course.semester).lower():
+        return True
+    if key in str(course.name).lower():
+        return True
+
+    return False
+
+
+def get_searched_value(value, key):
+    if isinstance(value, list):
+        new_value = []
+        for v in value:
+            if isinstance(v, Exam):
+                if search_exam(v, key):
+                    new_value.append(v)
+            elif isinstance(v, Course):
+                if search_course(v, key):
+                    new_value.append(v)
+            elif re.search(key, str(v), re.IGNORECASE):
+                new_value.append(value)
+        return None if len(new_value) == 0 else new_value
+
+    return None
+
+
+def search_page(request):
+
+    context = get_context(request)
+
+    new_context = dict()
+    new_context['is_staff'] = context['is_staff']
+    new_context['if_staff'] = context['if_staff']
+    new_context['if_dean'] = context['if_dean']
+    new_context['user'] = context['user']
+    new_context['notifications'] = context['notifications']
+    new_context['faculty'] = context['faculty']
+
+    data_found = False
+    if request.method == 'POST':
+        if 'search' in request.POST:
+            search = request.POST.get('search', '')
+            for key, value in context.items():
+                print(key, value)
+                new_value = get_searched_value(value, search)
+                if new_value:
+                    data_found = True
+                    new_context[key] = new_value
+
+    new_context['data_found'] = data_found
+    print(new_context)
+    return render(request, 'search-page.html', new_context)
