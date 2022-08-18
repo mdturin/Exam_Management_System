@@ -3,6 +3,13 @@
 {% block content %}
 
 <h1>Routine Section</h1>
+{% if if_dean %}
+<div class="create-new">
+  <a class="nav-link btn btn-success create-new-button"  href="{% url 'dean-view-pending-routine' %}" >
+    Pending Routine
+  </a>
+</div>
+{% endif %}
 <div class="create-new">
   <a class="nav-link btn btn-success create-new-button"  href="{% url 'add-routine' %}" >
     Add Routine

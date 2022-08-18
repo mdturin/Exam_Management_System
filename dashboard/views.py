@@ -110,13 +110,15 @@ def get_context(request, full_routine=False):
         'if_dean': dean is not None,
         'user': staff or teacher,
     }
-
+    
     if context['is_staff'] or full_routine:
         approved_routines = Routine.objects.filter(is_approved=True).all()
         current, past, upcomming = get_exams(approved_routines)
         context['current_exams'] = current
         context['past_exams'] = past
         context['upcomming_exams'] = upcomming
+        routines = Routine.objects.filter(is_approved=False).all()
+        context['routines'] = routines
 
     if context['is_staff']:
         faculty = Faculty.objects.get(name=faculty_name)
@@ -409,3 +411,26 @@ def edit_course(request):
         event.save()
         return render(request, 'course-section.html', context)
     return render(request, 'edit-course.html', context)
+
+
+# @login_required(login_url='deanlogin')
+def dean_view_pending_routine(request):
+    context = get_context(request)
+    return render(request,'dean_view_pending_routine.html', context)
+
+# @login_required(login_url='adminlogin')
+def approve_routine_view(request,pk):
+    context = get_context(request)
+    routine= Routine.objects.get(id=pk)
+    routine.is_approved=True
+    
+    routine.save()
+    return render(request,'dean_view_pending_routine.html', context)
+
+# @login_required(login_url='adminlogin')
+def reject_routine_view(request,pk):
+    context = get_context(request)
+    routine= Routine.objects.get(id=pk)
+    routine.delete()
+    return render(request,'dean_view_pending_routine.html', context)
+
