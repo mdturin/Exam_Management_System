@@ -93,11 +93,16 @@ def get_exams(approved_routines, teacher=None):
     return current, past, upcomming
 
 
+def get_notification(user):
+    return Notification.objects.filter(user=user, marked_read=False).all()
+
+
 def get_context(request, full_routine=False):
     faculty_name = None
-    dean = is_dean(request.user)
-    staff = is_staff(request.user)
-    teacher = is_teacher(request.user)
+    user = request.user
+    dean = is_dean(user)
+    staff = is_staff(user)
+    teacher = is_teacher(user)
 
     if staff:
         faculty_name = staff.faculty
@@ -109,8 +114,9 @@ def get_context(request, full_routine=False):
         'if_staff': staff is not None,
         'if_dean': dean is not None,
         'user': staff or teacher,
+        'notifications': get_notification(user),
     }
-    
+
     if context['is_staff'] or full_routine:
         approved_routines = Routine.objects.filter(is_approved=True).all()
         current, past, upcomming = get_exams(approved_routines)
@@ -329,10 +335,12 @@ class EventDeleteView(DeleteView):
     success_url = '/'
     template_name = 'event_confirm_delete.html'
 
+
 class CourseDeleteView(DeleteView):
     model = Course
     success_url = '/'
     template_name = 'course_confirm_delete.html'
+
 
 def add_event(request):
     context = get_context(request)
@@ -370,6 +378,7 @@ def edit_event(request):
         event.save()
         return render(request, 'event-section.html', context)
     return render(request, 'add-event.html', context)
+
 
 def add_course(request):
     context = get_context(request)
@@ -413,24 +422,29 @@ def edit_course(request):
     return render(request, 'edit-course.html', context)
 
 
-# @login_required(login_url='deanlogin')
 def dean_view_pending_routine(request):
     context = get_context(request)
-    return render(request,'dean_view_pending_routine.html', context)
+    return render(request, 'dean_view_pending_routine.html', context)
 
-# @login_required(login_url='adminlogin')
-def approve_routine_view(request,pk):
+
+def approve_routine_view(request, pk):
     context = get_context(request)
-    routine= Routine.objects.get(id=pk)
-    routine.is_approved=True
-    
+    routine = Routine.objects.get(id=pk)
+    routine.is_approved = True
+
     routine.save()
-    return render(request,'dean_view_pending_routine.html', context)
+    return render(request, 'dean_view_pending_routine.html', context)
 
-# @login_required(login_url='adminlogin')
-def reject_routine_view(request,pk):
+
+def reject_routine_view(request, pk):
     context = get_context(request)
-    routine= Routine.objects.get(id=pk)
+    routine = Routine.objects.get(id=pk)
     routine.delete()
-    return render(request,'dean_view_pending_routine.html', context)
+    return render(request, 'dean_view_pending_routine.html', context)
 
+
+def marked_notification(request, pk):
+    notification = Notification.objects.get(pk=pk)
+    notification.marked_read = True
+    notification.save()
+    return redirect('dashboard-page')

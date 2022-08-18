@@ -1,3 +1,4 @@
+import re
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -131,3 +132,15 @@ class OTP(models.Model):
 
     def __str__(self) -> str:
         return self.user.email
+
+
+class Notification(models.Model):
+
+    user = models.ForeignKey(User, models.CASCADE)
+
+    messages = models.CharField(max_length=255, null=False)
+
+    marked_read = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.messages

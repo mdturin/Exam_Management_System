@@ -26,7 +26,9 @@ urlpatterns = [
     path('delete-staff/<pk>', StaffDeleteView.as_view(), name='delete-staff'),
     path('delete-event/<pk>', EventDeleteView.as_view(), name='delete-event'),
     path('delete-course/<pk>', CourseDeleteView.as_view(), name='delete-course'),
-    path('dean-view-pending-routine', dean_view_pending_routine,name='dean-view-pending-routine'),
-    path('approve-routine/<int:pk>', approve_routine_view,name='approve-routine'),
-    path('reject-routine/<int:pk>', reject_routine_view,name='reject-routine'),
+    path('dean-view-pending-routine', dean_view_pending_routine,
+         name='dean-view-pending-routine'),
+    path('approve-routine/<int:pk>', approve_routine_view, name='approve-routine'),
+    path('reject-routine/<int:pk>', reject_routine_view, name='reject-routine'),
+    path('notification/<int:pk>', marked_notification, name='marked-notification'),
 ]
