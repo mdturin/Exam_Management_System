@@ -28,6 +28,7 @@ urlpatterns = [
     path('delete-course/<pk>', CourseDeleteView.as_view(), name='delete-course'),
     path('dean-view-pending-routine', dean_view_pending_routine,
          name='dean-view-pending-routine'),
+    path('routine-view/<int:pk>', routine_view, name='routine-view'),
     path('approve-routine/<int:pk>', approve_routine_view, name='approve-routine'),
     path('reject-routine/<int:pk>', reject_routine_view, name='reject-routine'),
     path('notification/<int:pk>', marked_notification, name='marked-notification'),

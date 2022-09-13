@@ -427,6 +427,9 @@ def dean_view_pending_routine(request):
     context = get_context(request)
     return render(request, 'dean_view_pending_routine.html', context)
 
+def routine_view(request, pk):
+    context = get_context(request)
+    return render(request, 'routine_view.html', context)
 
 def approve_routine_view(request, pk):
     context = get_context(request)
