@@ -29,8 +29,8 @@
               {% for routine in routines %}
               <tr>
                 <td> {{routine.name}} </td>
-                <td> Department Name </td>
-                <td> Start Date </td>
+                <td> {{routine.department}} </td>
+                <td> {{routine.start_date}} </td>
                 <td>
                   <a class="btn btn-success" href="{% url 'routine-view' routine.id  %}">View</a>
                 </td>

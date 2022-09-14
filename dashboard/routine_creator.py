@@ -102,16 +102,19 @@ def CreateRoutine(routine_name, faculty_name, department_name, level, semester, 
     courses = department.course_set.filter(
         level=level, semester=semester, is_sessional=exam_type)
 
+    start_date = get_date(date_str)
+
     routine = Routine()
     routine.name = routine_name
+    routine.department = department
+    routine.start_date = start_date
     routine.is_approved = False
     routine.save()
 
-    start_date = get_date(date_str)
     room, shift = get_best_info(start_date, courses)
 
     cur_date = get_date(date_str)
-    need_examiners = max(2, (num_students+10) / 15)
+    need_examiners = max(2, (num_students-5) // 15)
 
     for course in courses:
 
