@@ -4,12 +4,6 @@
 
 <h1>Dashboard</h1>
 
-<div class="create-new">
-  <a class="nav-link btn btn-success create-new-button" href="{% url 'full-routine' %}">
-    See Full Routine
-  </a>
-</div>
-
 {% if is_staff and routines|length %}
 <div class="row ">
   <div class="col-12 grid-margin">
