@@ -90,6 +90,10 @@ class Routine(models.Model):
 
     name = models.CharField(max_length=255, null=False)
 
+    start_date = models.DateField()
+
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+
     is_approved = models.BooleanField(default=False)
 
     def __str__(self) -> str:
