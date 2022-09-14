@@ -429,6 +429,8 @@ def dean_view_pending_routine(request):
 
 def routine_view(request, pk):
     context = get_context(request)
+    single_routine = Exam.objects.filter(routine_id=pk).all()
+    context['single_routine'] = single_routine
     return render(request, 'routine_view.html', context)
 
 def approve_routine_view(request, pk):

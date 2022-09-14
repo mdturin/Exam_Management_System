@@ -2,6 +2,41 @@
 {% load static %}
 {% block content %}
 
-Routine View
+<div class="row ">
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Routine name</h4>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th> Exam Date </th>
+                  <th> Exam Time </th>
+                  <th> Room No. </th>
+                  <th> Course Code </th>
+                  <th> Course Title </th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                {% for routine in single_routine %}
+                <tr>
+                  <td> {{routine.exam_date}} </td>
+                  <td> {{routine.exam_time}} </td>
+                  <td> {{routine.room_number}} </td>
+                  <td> {{routine.course_id}} </td>
+                  <td> {{routine.course_id}} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <a class="btn btn-success" href="#">Approve</a>
+            <a class="btn btn-danger" href="#">Download</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
 
 {% endblock content %}
