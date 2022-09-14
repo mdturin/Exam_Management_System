@@ -59,19 +59,13 @@
               <hr>
               <div class="row">
                 <div class="col-sm-3">
-                  <p class="mb-0">Available</p>
+                  <p class="mb-0">Availability</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0">{{ user.is_available }}</p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Total Credit</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">{{ user.total_creadits }}</p>
+                  <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                  </label>
                 </div>
               </div>
             {% endif %}
