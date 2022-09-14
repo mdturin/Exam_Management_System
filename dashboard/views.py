@@ -427,11 +427,15 @@ def dean_view_pending_routine(request):
     context = get_context(request)
     return render(request, 'dean_view_pending_routine.html', context)
 
+
 def routine_view(request, pk):
     context = get_context(request)
-    single_routine = Exam.objects.filter(routine_id=pk).all()
-    context['single_routine'] = single_routine
+    routine = Routine.objects.filter(pk=pk).first()
+    exams = Exam.objects.filter(routine=routine).all()
+    context['exams'] = exams
+    context['routine_name'] = routine.name
     return render(request, 'routine_view.html', context)
+
 
 def approve_routine_view(request, pk):
     context = get_context(request)
