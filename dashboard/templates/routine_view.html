@@ -32,9 +32,11 @@
             </tbody>
           </table>
           <hr>
-          <a class="btn btn-primary" href="#">Approve</a>
+          {% if is_staff %}
+            <a class="btn btn-primary" href="#">Approve</a>
+            <a class="btn btn-danger" href="#">Reject</a>
+          {% endif %}
           <a class="btn btn-success" href="#">Download</a>
-          <a class="btn btn-danger" href="#">Reject</a>
         </div>
       </div>
     </div>
