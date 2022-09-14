@@ -126,6 +126,7 @@ def get_context(request, full_routine=False):
         context['upcomming_exams'] = upcomming
         routines = Routine.objects.filter(is_approved=False).all()
         context['routines'] = routines
+        context['approved_routines'] = approved_routines
 
     if context['is_staff']:
         faculty = Faculty.objects.get(name=faculty_name)
@@ -146,6 +147,7 @@ def get_context(request, full_routine=False):
         context['current_exams'] = current
         context['past_exams'] = past
         context['upcomming_exams'] = upcomming
+        context['approved_routines'] = approved_routines
 
     return context
 
