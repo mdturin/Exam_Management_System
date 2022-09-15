@@ -13,7 +13,7 @@ pdfmetrics.registerFont(TTFont('VeraIt', 'VeraIt.ttf'))
 pdfmetrics.registerFont(TTFont('VeraBI', 'VeraBI.ttf'))
 
 
-def downloader(exams):
+def downloader(exams, routine):
     packet = io.BytesIO()
     can = canvas.Canvas(packet, pagesize=letter)
     can.setFont('Vera', 8)
@@ -21,9 +21,11 @@ def downloader(exams):
     today = str(date.today())
 
     can.drawString(465, 675, today)  # done
-    
-    can.drawString(10, 150, "Some text encoded in UTF-8")
-    can.drawString(10, 100, "In the Vera TT Font!")
+
+    can.drawString(105, 629, routine.department.name)  # done
+
+    can.drawString(105, 629, routine.department.name)
+
     can.save()
 
     # move to the beginning of the StringIO buffer
