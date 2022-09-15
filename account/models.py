@@ -88,7 +88,7 @@ class Staff(models.Model):
 
 class Routine(models.Model):
 
-    name = models.CharField(max_length=255, null=False)
+    name = models.CharField(max_length=255, null=False, unique=True)
 
     start_date = models.DateField()
 

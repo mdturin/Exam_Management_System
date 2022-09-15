@@ -9,6 +9,7 @@ from django.views.generic.edit import DeleteView
 
 from dashboard.models import *
 from dashboard.routine_creator import *
+from dashboard.routine_downloader import *
 
 
 def is_dean(user):
@@ -574,3 +575,10 @@ def search_page(request):
     new_context['data_found'] = data_found
 
     return render(request, 'search-page.html', new_context)
+
+
+def download_routine(request, name):
+    routine = Routine.objects.get(name=name)
+    exams = Exam.objects.filter(routine=routine)
+    downloader(exams)
+    return redirect('routine-view', pk=routine.pk)

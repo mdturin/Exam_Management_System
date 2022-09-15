@@ -33,10 +33,10 @@
           </table>
           <hr>
           {% if is_staff %}
-            <a class="btn btn-primary" href="#">Approve</a>
-            <a class="btn btn-danger" href="#">Reject</a>
+          <a class="btn btn-primary" href="#">Approve</a>
+          <a class="btn btn-danger" href="#">Reject</a>
           {% endif %}
-          <a class="btn btn-success" href="#">Download</a>
+          <a class="btn btn-success" href="{% url 'download-routine' routine_name %}">Download</a>
         </div>
       </div>
     </div>
