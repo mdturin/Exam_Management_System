@@ -13,7 +13,7 @@ pdfmetrics.registerFont(TTFont('VeraIt', 'VeraIt.ttf'))
 pdfmetrics.registerFont(TTFont('VeraBI', 'VeraBI.ttf'))
 
 
-def downloader(exams, routine):
+def downloader(exams, routine, room, shift):
     packet = io.BytesIO()
     can = canvas.Canvas(packet, pagesize=letter)
     can.setFont('Vera', 8)
@@ -27,6 +27,8 @@ def downloader(exams, routine):
     can.drawString(127, 614, "B.Sc.")  # done
 
     can.drawString(105, 599, "Wazed Building")  # done
+
+    can.drawString(105, 583, str(room))  # done
 
     can.save()
 

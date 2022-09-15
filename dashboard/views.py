@@ -580,5 +580,5 @@ def search_page(request):
 def download_routine(request, name):
     routine = Routine.objects.get(name=name)
     exams = Exam.objects.filter(routine=routine)
-    downloader(exams, routine)
+    downloader(exams, routine, exams[0].room_number, exams[0].exam_time)
     return redirect('routine-view', pk=routine.pk)
