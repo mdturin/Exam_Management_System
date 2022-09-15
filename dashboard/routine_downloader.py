@@ -32,6 +32,12 @@ def downloader(exams, routine, room, shift):
     shift = datetime.datetime.strptime(str(shift), "%H:%M:%S")
     can.drawString(98, 567, shift.strftime("%I:%M %p"))  # done
 
+    k = 0
+    for exam in exams:
+        can.drawString(160, 530 - k, str(exam.exam_date))
+        can.drawString(405, 530 - k, str(exam.course.code))
+        k += 16
+
     can.save()
 
     # move to the beginning of the StringIO buffer
