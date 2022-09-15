@@ -26,6 +26,8 @@ def downloader(exams, routine):
 
     can.drawString(127, 614, "B.Sc.")  # done
 
+    can.drawString(105, 599, "Wazed Building")  # done
+
     can.save()
 
     # move to the beginning of the StringIO buffer
