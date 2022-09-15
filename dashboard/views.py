@@ -1,9 +1,14 @@
-from datetime import date
-
+import mimetypes
 import re
+import os
+from datetime import date
+from wsgiref.util import FileWrapper
+
 from account.models import *
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import transaction
+from django.http import StreamingHttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic.edit import DeleteView
 
@@ -581,4 +586,15 @@ def download_routine(request, name):
     routine = Routine.objects.get(name=name)
     exams = Exam.objects.filter(routine=routine)
     downloader(exams, routine, exams[0].room_number, exams[0].exam_time)
-    return redirect('routine-view', pk=routine.pk)
+
+    base_dir = settings.BASE_DIR
+    file = os.path.join(base_dir, 'Sample/output.pdf')
+    chunk_size = 8192
+
+    f = FileWrapper(open(file, 'rb'), chunk_size)
+    response = StreamingHttpResponse(
+        f, content_type=mimetypes.guess_type(file)[0])
+    response['Content-Length'] = os.path.getsize(file)
+    response['Content-Disposition'] = "Attachment;filename=%s" % name
+
+    return response
