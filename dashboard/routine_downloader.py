@@ -24,7 +24,7 @@ def downloader(exams, routine):
 
     can.drawString(105, 629, routine.department.name)  # done
 
-    can.drawString(105, 629, routine.department.name)
+    can.drawString(127, 614, "B.Sc.")  # done
 
     can.save()
 
