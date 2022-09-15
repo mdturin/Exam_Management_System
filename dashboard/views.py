@@ -109,6 +109,10 @@ def get_context(request, full_routine=False):
         faculty_name = staff.faculty
     elif dean:
         faculty_name = dean.faculty
+    elif teacher:
+        faculty_name = teacher.faculty
+
+    faculty = Faculty.objects.get(name=faculty_name)
 
     context = {
         'is_staff': (staff != None or dean != None),
@@ -119,17 +123,18 @@ def get_context(request, full_routine=False):
     }
 
     if context['is_staff'] or full_routine:
-        approved_routines = Routine.objects.filter(is_approved=True).all()
+        approved_routines = Routine.objects.filter(is_approved=True).filter(
+            department__in=faculty.department_set.all()).all()
         current, past, upcomming = get_exams(approved_routines)
         context['current_exams'] = current
         context['past_exams'] = past
         context['upcomming_exams'] = upcomming
-        routines = Routine.objects.filter(is_approved=False).all()
+        routines = Routine.objects.filter(is_approved=False).filter(
+            department__in=faculty.department_set.all()).all()
         context['routines'] = routines
         context['approved_routines'] = approved_routines
 
     if context['is_staff']:
-        faculty = Faculty.objects.get(name=faculty_name)
         context['faculty'] = faculty
         context['staffs'] = get_staff(faculty)
         context['courses'] = get_courses(faculty_name)
@@ -142,7 +147,8 @@ def get_context(request, full_routine=False):
             start_date__year=year).all()
 
     elif not full_routine:
-        approved_routines = Routine.objects.filter(is_approved=True).all()
+        approved_routines = Routine.objects.filter(is_approved=True).filter(
+            department__in=faculty.department_set.all()).all()
         current, past, upcomming = get_exams(approved_routines, teacher)
         context['current_exams'] = current
         context['past_exams'] = past
