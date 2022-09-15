@@ -1,5 +1,5 @@
 import io
-from datetime import date
+import datetime
 
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from reportlab.lib.pagesizes import letter
@@ -16,10 +16,9 @@ pdfmetrics.registerFont(TTFont('VeraBI', 'VeraBI.ttf'))
 def downloader(exams, routine, room, shift):
     packet = io.BytesIO()
     can = canvas.Canvas(packet, pagesize=letter)
-    can.setFont('Vera', 8)
+    can.setFont('Vera', 10)
 
-    today = str(date.today())
-
+    today = str(datetime.date.today())
     can.drawString(465, 675, today)  # done
 
     can.drawString(105, 629, routine.department.name)  # done
@@ -29,6 +28,9 @@ def downloader(exams, routine, room, shift):
     can.drawString(105, 599, "Wazed Building")  # done
 
     can.drawString(105, 583, str(room))  # done
+
+    shift = datetime.datetime.strptime(str(shift), "%H:%M:%S")
+    can.drawString(98, 567, shift.strftime("%I:%M %p"))  # done
 
     can.save()
 
