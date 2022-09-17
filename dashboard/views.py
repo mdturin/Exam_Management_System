@@ -116,7 +116,8 @@ def get_context(request, full_routine=False):
     elif dean:
         faculty_name = dean.faculty
     elif teacher:
-        faculty_name = teacher.faculty
+        department = Department.objects.get(name=teacher.department)
+        faculty_name = department.faculty.name
 
     faculty = Faculty.objects.get(name=faculty_name)
 
