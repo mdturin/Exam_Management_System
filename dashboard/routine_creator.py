@@ -138,7 +138,6 @@ def CreateRoutine(routine_name, faculty_name, department_name,
     courses = department.course_set.filter(
         level=level, semester=semester, is_sessional=exam_type)
 
-
     start_date = get_date(date_str)
 
     routine = Routine()
@@ -170,6 +169,10 @@ def CreateRoutine(routine_name, faculty_name, department_name,
         exam.course = course
 
         exam.supervisor = supervisors[0]
+        notification = Notification()
+        notification.user = supervisors[0].user
+        notification.messages = f"You are assigned as a supervisor in {course.code}"
+        notification.save()
 
         supervisors[0].total_creadits += course.credits
 
@@ -180,6 +183,11 @@ def CreateRoutine(routine_name, faculty_name, department_name,
         for _ in range(need_examiners):
             exam.examiners.add(examiners[_])
             examiners[_].total_creadits += course.credits
+
+            notification = Notification()
+            notification.user = examiners[_].user
+            notification.messages = f"You are assigned as a examiner in {course.code}"
+            notification.save()
 
         examiners = sorted(examiners, key=lambda t: t.total_creadits)
         supervisors = sorted(supervisors, key=lambda t: t.total_creadits)
