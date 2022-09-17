@@ -51,6 +51,12 @@ class Course(models.Model):
     def __str__(self) -> str:
         return f"{ self.code }"
 
+    def __lt__(self, other):
+        return self.credits < other.credits
+
+    def __eq__(self, other):
+        return self.credits == other.credits
+
 
 class Event(models.Model):
 

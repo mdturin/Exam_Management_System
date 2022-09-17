@@ -1,4 +1,5 @@
 import datetime
+import math
 
 from account.models import *
 
@@ -65,14 +66,44 @@ def get_available_date(cur_date, room, shift):
 
 def get_end_date(cur_date, room, shift, courses: Course):
 
-    for _ in range(len(courses)):
-        cur_date = get_available_date(cur_date, room, shift)
-        cur_date = get_next_date(cur_date, (int)(courses[_].credits))
+    best_end = None
+    best_courses = []
 
-    return cur_date
+    for i in range(len(courses)):
+        x = i
+        step = len(courses)
+        vis = [False] * step
+        cur = get_available_date(cur_date, room, shift)
+
+        new_courses = []
+        while(step > 0):
+            step -= 1
+            vis[x] = True
+            new_courses.append(courses[x])
+
+            y = None
+            end_date = None
+            for j in range(len(courses)):
+                if vis[j] == False:
+                    delta = int(math.ceil(courses[j].credits))
+                    now_date = get_next_date(cur, delta)
+                    now_date = get_available_date(now_date, room, shift)
+                    if not end_date or now_date < end_date:
+                        y = j
+                        end_date = now_date
+
+            if not y:
+                x = y
+                cur = end_date
+
+        if not best_end or cur < best_end:
+            best_end = cur
+            best_courses = new_courses
+
+    return best_end, best_courses
 
 
-def get_best_info(start_date, courses):
+def get_best_info(start_date, courses: Course):
     rooms = Room.objects.all()
     shifts = Shift.objects.all()
 
@@ -80,20 +111,25 @@ def get_best_info(start_date, courses):
     best_shift = None
     best_end_date = None
 
+    new_courses = []
+    courses = sorted(courses, key=lambda c: c.credits)
+
     for room in rooms:
         for shift in shifts:
             cur_date = start_date
-            end_date = get_end_date(
+            end_date, _courses = get_end_date(
                 cur_date, room.room_no, shift.time, courses)
             if (not best_end_date) or (best_end_date > end_date):
                 best_room = room.room_no
                 best_shift = shift.time
                 best_end_date = end_date
+                new_courses = courses
 
-    return best_room, best_shift
+    return best_room, best_shift, new_courses
 
 
-def CreateRoutine(routine_name, faculty_name, department_name, level, semester, exam_type, num_students, date_str):
+def CreateRoutine(routine_name, faculty_name, department_name,
+                  level, semester, exam_type, num_students, date_str):
 
     faculty = Faculty.objects.get(name=faculty_name)
     supervisors, examiners = get_teachers(faculty_name)
@@ -101,6 +137,7 @@ def CreateRoutine(routine_name, faculty_name, department_name, level, semester, 
 
     courses = department.course_set.filter(
         level=level, semester=semester, is_sessional=exam_type)
+
 
     start_date = get_date(date_str)
 
@@ -111,7 +148,7 @@ def CreateRoutine(routine_name, faculty_name, department_name, level, semester, 
     routine.is_approved = False
     routine.save()
 
-    room, shift = get_best_info(start_date, courses)
+    room, shift, courses = get_best_info(start_date, courses)
 
     cur_date = get_date(date_str)
     need_examiners = max(2, (num_students-5) // 15)
