@@ -20801,10 +20801,8 @@ div.tagsinput {
               margin-right: 1rem; }
             .sidebar .nav .nav-item.profile .profile-desc .profile-name span {
               font-size: 12px;
-              color: #6c7293;
-              white-space: nowrap; }
-            .sidebar .nav .nav-item.profile .profile-desc .profile-name h5 {
-              white-space: nowrap; }
+              color: #6c7293; }
+            
           .sidebar .nav .nav-item.profile .profile-desc .profile-pic {
             display: flex;
             align-items: center; }
