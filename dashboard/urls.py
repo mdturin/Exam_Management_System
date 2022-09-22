@@ -30,7 +30,7 @@ urlpatterns = [
          name='dean-view-pending-routine'),
     path('routine-view/<int:pk>', routine_view, name='routine-view'),
     path('routine-approve-view/<int:pk>', routine_approve_view, name='routine-approve-view'),
-    path('approve-routine/<int:pk>', approve_routine_view, name='approve-approve-routine'),
+    path('approve-routine/<int:pk>', approve_routine_view, name='approve-routine'),
     path('reject-routine/<int:pk>', reject_routine_view, name='reject-routine'),
     path('notification/<int:pk>', marked_notification, name='marked-notification'),
     path('download/routine/<str:name>',

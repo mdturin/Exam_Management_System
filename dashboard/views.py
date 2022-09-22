@@ -221,7 +221,7 @@ def add_routine(request):
         CreateRoutine(name, faculty, dept, level, semester,
                       type == 'LAB', int(num_students), start_date)
 
-        return redirect('routine-section')
+        return redirect('dashboard-page')
 
     LEVEL_CHOICES = ['1', '2', '3', '4']
     SEMESTER_CHOICES = ['I', 'II']
@@ -457,6 +457,7 @@ def routine_approve_view(request, pk):
     exams = Exam.objects.filter(routine=routine).all()
     context['exams'] = exams
     context['routine_name'] = routine.name
+    context['routine_id'] = routine.id
     return render(request, 'routine-approve-view.html', context)
 
 def approve_routine_view(request, pk):
@@ -465,14 +466,14 @@ def approve_routine_view(request, pk):
     routine.is_approved = True
 
     routine.save()
-    return render(request, 'dean_view_pending_routine.html', context)
+    return render(request, 'dashboard.html', context)
 
 
 def reject_routine_view(request, pk):
     context = get_context(request)
     routine = Routine.objects.get(id=pk)
     routine.delete()
-    return render(request, 'dean_view_pending_routine.html', context)
+    return render(request, 'dashboard.html', context)
 
 
 def marked_notification(request, pk):
