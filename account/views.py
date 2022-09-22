@@ -81,4 +81,5 @@ def register_page(request):
 
     return render(request, 'register_page.html', context)
 
-
+def home(request):
+    return render(request, 'home.html')
