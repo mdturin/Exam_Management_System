@@ -9,6 +9,8 @@ from account.models import *
 # login auth
 from django.contrib import messages
 
+from dashboard.views import *
+
 def login_code(request):
     context = {'title': 'Verify User'}
     if request.method == 'POST':

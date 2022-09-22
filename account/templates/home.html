@@ -25,10 +25,12 @@
         <img src="https://hstu.ac.bd/img/hstu_logo_.png" alt="HSTU logo" width="15%">
         
         <br>
-        
-       <form action="">
+    
+        <form class="search" method="post" action="{% url 'search-page' %}">
+            {% csrf_token %}
+            
             <div id="search-box-outer">
-                <input class="search-box-inner">
+                <input type="text" name="search" class="form-control search-box-inner" placeholder="Search events" />
                 <span>
                     <img class="mic" src="https://www.gstatic.com/images/branding/googlemic/2x/googlemic_color_24dp.png" alt="voice command button">
                 </span>
@@ -40,7 +42,7 @@
                 <input type="submit" class="search-button" value="Search">
                 <input type="submit" class="search-button" value="I'm Feeling Lucky">
             </div>
-       </form>
+        </form>
     </div>
         
     <footer id="footer-bar">
