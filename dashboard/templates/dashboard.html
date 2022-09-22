@@ -32,7 +32,7 @@
                 <td> {{routine.department}} </td>
                 <td> {{routine.start_date}} </td>
                 <td>
-                  <a class="btn btn-success" href="{% url 'routine-view' routine.id  %}">View</a>
+                  <a class="btn btn-success" href="{% url 'routine-approve-view' routine.id  %}">View</a>
                 </td>
                 <td>
                   <a class="btn btn-danger" href="{% url 'reject-routine' routine.id  %}">Reject</a>

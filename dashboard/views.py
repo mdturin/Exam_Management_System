@@ -451,6 +451,13 @@ def routine_view(request, pk):
     context['routine_name'] = routine.name
     return render(request, 'routine_view.html', context)
 
+def routine_approve_view(request, pk):
+    context = get_context(request)
+    routine = Routine.objects.filter(pk=pk).first()
+    exams = Exam.objects.filter(routine=routine).all()
+    context['exams'] = exams
+    context['routine_name'] = routine.name
+    return render(request, 'routine-approve-view.html', context)
 
 def approve_routine_view(request, pk):
     context = get_context(request)
