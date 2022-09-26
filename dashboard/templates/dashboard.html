@@ -74,7 +74,7 @@
                   <a class="btn btn-primary" href="{% url 'routine-view' routine.id  %}">View</a>
                 </td>
                 <td>
-                  <a class="btn btn-success" href="#">Download Roaster</a>
+                  <a class="btn btn-success" href="{% url 'download-roaster' routine.name %}">Download Roaster</a>
                 </td>
               </tr>
               {% endfor %}
@@ -121,7 +121,7 @@
                   {% endfor %}
                 </td>
                 <td>
-                  <a class="btn btn-success" href="#">Download Roaster</a>
+                  <a class="btn btn-success" href="{% url 'download-roaster' exam.routine.name %}">Download Roaster</a>
                 </td>
               </tr>
               {% endfor %}
@@ -167,7 +167,7 @@
                   {% endfor %}
                 </td>
                 <td>
-                  <a class="btn btn-success" href="#">Download Roaster</a>
+                  <a class="btn btn-success" href="{% url 'download-roaster' exam.routine.name %}">Download Roaster</a>
                 </td>
               </tr>
               {% endfor %}
@@ -213,7 +213,7 @@
                   {% endfor %}
                 </td>
                 <td>
-                  <a class="btn btn-success" href="#">Download Roaster</a>
+                  <a class="btn btn-success" href="{% url 'download-roaster' exam.routine.name %}">Download Roaster</a>
                 </td>
               </tr>
               {% endfor %}
