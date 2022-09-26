@@ -155,6 +155,7 @@ def get_context(request, full_routine=False):
             start_date__year=year).all()
 
     elif not full_routine:
+        context['faculty'] = faculty
         approved_routines = Routine.objects.filter(is_approved=True).filter(
             department__in=faculty.department_set.all()).all()
         current, past, upcomming = get_exams(approved_routines, teacher)
