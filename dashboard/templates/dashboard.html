@@ -74,7 +74,7 @@
                   <a class="btn btn-primary" href="{% url 'routine-view' routine.id  %}">View</a>
                 </td>
                 <td>
-                  <a class="btn btn-success" href="#">Download</a>
+                  <a class="btn btn-success" href="#">Download Roaster</a>
                 </td>
               </tr>
               {% endfor %}
@@ -120,6 +120,9 @@
                   <p> {{ teacher }} </p>
                   {% endfor %}
                 </td>
+                <td>
+                  <a class="btn btn-success" href="#">Download Roaster</a>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -163,6 +166,9 @@
                   <p> {{ teacher }} </p>
                   {% endfor %}
                 </td>
+                <td>
+                  <a class="btn btn-success" href="#">Download Roaster</a>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -205,6 +211,9 @@
                   {% for teacher in exam.examiners.all %}
                   <p> {{ teacher }} </p>
                   {% endfor %}
+                </td>
+                <td>
+                  <a class="btn btn-success" href="#">Download Roaster</a>
                 </td>
               </tr>
               {% endfor %}
