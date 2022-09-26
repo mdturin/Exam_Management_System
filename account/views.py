@@ -1,3 +1,5 @@
+from dashboard.views import *
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
@@ -6,10 +8,6 @@ from account.forms import *
 from account.mail_sender import send_code
 from account.models import *
 
-# login auth
-from django.contrib import messages
-
-from dashboard.views import *
 
 def login_code(request):
     context = {'title': 'Verify User'}
@@ -67,7 +65,7 @@ def register_page(request):
 
         except User.DoesNotExist:
             # print(email, 'dosent exist')
-            messages.warning(request, (email+ ' dosent exist'))
+            messages.warning(request, (email + ' dosent exist'))
             return render(request, 'register_page.html', context)
 
         code = send_code(email)
@@ -83,5 +81,114 @@ def register_page(request):
 
     return render(request, 'register_page.html', context)
 
+
 def home(request):
     return render(request, 'home.html')
+
+
+def search_exam(exam: Exam, key: str):
+
+    key = key.lower()
+
+    if key in str(exam.room_number):
+        return True
+    if key in str(exam.course).lower():
+        return True
+    if key in str(exam.supervisor).lower():
+        return True
+
+    for teacher in exam.examiners.all():
+        if key in teacher.get_name.lower():
+            return True
+
+    return False
+
+
+def search_course(course: Course, key: str):
+
+    key = key.lower()
+
+    if key in str(course.code).lower():
+        return True
+    if key in str(course.credits).lower():
+        return True
+    if key in str(course.department).lower():
+        return True
+    if key in str(course.level).lower():
+        return True
+    if key in str(course.semester).lower():
+        return True
+    if key in str(course.name).lower():
+        return True
+
+    return False
+
+
+def search_teacher(teacher: Teacher, key: str):
+
+    key = key.lower()
+
+    if key in str(teacher.get_name).lower():
+        return True
+    if key in str(teacher.title).lower():
+        return True
+    if key in str(teacher.department).lower():
+        return True
+    if key in str(teacher.contact_number).lower():
+        return True
+    if key in str(teacher.user).lower():
+        return True
+
+    return False
+
+
+def get_searched_value(value, key):
+    if isinstance(value, list):
+        new_value = []
+        for v in value:
+            if isinstance(v, Exam):
+                if search_exam(v, key):
+                    new_value.append(v)
+            elif isinstance(v, Course):
+                if search_course(v, key):
+                    new_value.append(v)
+            elif isinstance(v, Teacher):
+                if search_teacher(v, key):
+                    new_value.append(v)
+            elif re.search(key, str(v), re.IGNORECASE):
+                new_value.append(value)
+        return None if len(new_value) == 0 else new_value
+
+    return None
+
+
+def homepage_search(request):
+
+    context = dict()
+    new_context = dict()
+
+    context['events'] = Event.objects.all()
+    context['courses'] = Course.objects.all()
+    context['teachers'] = Teacher.objects.all()
+    context['departments'] = Department.objects.all()
+
+    print(context['courses'])
+
+    data_found = False
+    if request.method == 'POST':
+        if 'search' in request.POST:
+            search = request.POST.get('search', '')
+            for key, value in context.items():
+                new_value = get_searched_value(value, search)
+                if new_value:
+                    data_found = True
+                    new_context[key] = new_value
+
+    departments = set()
+    for teacher in new_context.get('teachers', []):
+        departments.add(teacher.department)
+
+    new_context['departments'] = list(departments)
+    new_context['data_found'] = data_found
+
+    return render(request, 'homepage-search.html', new_context)
