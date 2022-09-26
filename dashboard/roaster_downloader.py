@@ -1,6 +1,7 @@
 import datetime
 import io
 import os
+from time import strftime
 
 from account.models import *
 from django.conf import settings
@@ -17,7 +18,8 @@ def get_data(exams: Exam):
     exams_data = []
     for exam in exams:
         data = []
-        data.append(str(exam.exam_date) + "\n" + str(exam.exam_time))
+        t = exam.exam_time.strftime("%I:%M %P")
+        data.append(str(exam.exam_date) + "\n" + t)
         data.append(exam.course.code)
         data.append(exam.supervisor.get_name)
         names = list(exam.examiners.all())
