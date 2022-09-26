@@ -15,6 +15,7 @@ from django.views.generic.edit import DeleteView
 from dashboard.models import *
 from dashboard.routine_creator import *
 from dashboard.routine_downloader import *
+from dashboard.roaster_downloader import *
 
 
 def is_dean(user):
@@ -451,6 +452,7 @@ def routine_view(request, pk):
     context['routine_name'] = routine.name
     return render(request, 'routine_view.html', context)
 
+
 def routine_approve_view(request, pk):
     context = get_context(request)
     routine = Routine.objects.filter(pk=pk).first()
@@ -459,6 +461,7 @@ def routine_approve_view(request, pk):
     context['routine_name'] = routine.name
     context['routine_id'] = routine.id
     return render(request, 'routine-approve-view.html', context)
+
 
 def approve_routine_view(request, pk):
     context = get_context(request)
@@ -598,6 +601,25 @@ def download_routine(request, name):
 
     base_dir = settings.BASE_DIR
     file = os.path.join(base_dir, 'Sample/output.pdf')
+    chunk_size = 8192
+
+    f = FileWrapper(open(file, 'rb'), chunk_size)
+    response = StreamingHttpResponse(
+        f, content_type=mimetypes.guess_type(file)[0])
+    response['Content-Length'] = os.path.getsize(file)
+    response['Content-Disposition'] = "Attachment;filename=%s" % name
+
+    return response
+
+
+def download_roaster(request, name):
+    routine = Routine.objects.get(name=name)
+    exams = Exam.objects.filter(routine=routine)
+
+    roaster(exams, routine)
+
+    base_dir = settings.BASE_DIR
+    file = os.path.join(base_dir, f"Sample/Roaster/{name}.docx")
     chunk_size = 8192
 
     f = FileWrapper(open(file, 'rb'), chunk_size)
