@@ -1,60 +1,89 @@
 import datetime
 import io
+import os
 
+from account.models import *
+from django.conf import settings
 from docx import Document
 from docx.enum.section import WD_ORIENT
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Inches, Mm
 
-from account.models import *
 from dashboard.models import *
-
-doc = Document()
-
-section = doc.sections[-1]
-section.orientation = WD_ORIENT.LANDSCAPE
-
-section.orientation = WD_ORIENT.LANDSCAPE
-section.page_width = Mm(297)
-section.page_height = Mm(210)
-
-title = doc.add_heading('Duty Roaster List', 0)
-title.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-table = doc.add_table(rows=1, cols=4, style='Table Grid')
-table.alignment = WD_TABLE_ALIGNMENT.CENTER
-
-row = table.rows[0].cells
-row[0].add_paragraph("Date").alignment = WD_ALIGN_PARAGRAPH.CENTER
-row[1].add_paragraph("Course Code").alignment = WD_ALIGN_PARAGRAPH.CENTER
-row[2].add_paragraph("Supervisor").alignment = WD_ALIGN_PARAGRAPH.CENTER
-row[3].add_paragraph("Examiners").alignment = WD_ALIGN_PARAGRAPH.CENTER
-# row[4].add_paragraph("Assistance").alignment = WD_ALIGN_PARAGRAPH.CENTER
 
 
 def get_data(exams: Exam):
     exams_data = []
     for exam in exams:
         data = []
-        data.append(str(exam.exam_date))
+        data.append(str(exam.exam_date) + "\n" + str(exam.exam_time))
         data.append(exam.course.code)
         data.append(exam.supervisor.get_name)
-        data.append(list(exam.examiners.all()))
+        names = list(exam.examiners.all())
+        names = list(map(lambda x: x.get_name, names))
+        data.append("\n".join(names))
         exams_data.append(data)
     return exams_data
 
 
+def add_text(row, col, msg, flag=False):
+    row[col].text = msg
+    p = row[col].paragraphs[0]
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Inches(.2)
+    if flag:
+        p.paragraph_format.space_after = Inches(.2)
+
+
+def add_header_section(doc, routine: Routine, level, semester):
+    data = [
+        'Duty Roaster List',
+        f"B'Sc in {routine.department}",
+        "Semester Final Examination",
+        f"Level: {level}, Semester: {semester}",
+    ]
+
+    title = doc.add_paragraph("\n".join(data))
+    title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+
+def get_level(exam: Exam):
+    level = exam.course.level
+    semester = exam.course.semester
+    return level, semester
+
+
 def roaster(exams: Exam, routine: Routine):
+
+    doc = Document()
+
+    level, semester = get_level(exams[0])
+    add_header_section(doc, routine, level, semester)
+
+    table = doc.add_table(rows=1, cols=4, style='Table Grid')
+
+    table.columns[0].width = Inches(1.2)
+    table.columns[1].width = Inches(1.2)
+    table.columns[2].width = Inches(2.0)
+    table.columns[3].width = Inches(2.0)
+
+    row = table.rows[0].cells
+    add_text(row, 0, "Date")
+    add_text(row, 1, "Course Code")
+    add_text(row, 2, "Supervisor")
+    add_text(row, 3, "Examiners")
+    # add_text(row, 4, "Assistance")
+
     data = get_data(exams)
     for date, code, supervisor, examiners in data:
         row = table.add_row().cells
-        row[0].add_paragraph(date).alignment = WD_ALIGN_PARAGRAPH.CENTER
-        row[1].add_paragraph(code).alignment = WD_ALIGN_PARAGRAPH.CENTER
-        row[2].add_paragraph(supervisor).alignment = WD_ALIGN_PARAGRAPH.CENTER
-        # row[3].add_paragraph("\n".join(examiners)
-        #                      ).alignment = WD_ALIGN_PARAGRAPH.CENTER
-        # row[4].add_paragraph("\n".join(assistance)
-        #                      ).alignment = WD_ALIGN_PARAGRAPH.CENTER
+        add_text(row, 0, date)
+        add_text(row, 1, code)
+        add_text(row, 2, supervisor)
+        add_text(row, 3, examiners, True)
+        # add_text(row, 4, assistance)
 
-    doc.save(f"Sample/Roaster/{routine.name}.docx")
+    base_dir = settings.BASE_DIR
+    file = os.path.join(base_dir, f"Sample/Roaster/{routine.name}.docx")
+    doc.save(file)
