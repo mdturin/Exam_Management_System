@@ -183,13 +183,18 @@ iframe {
 
 
 .wrap-login100 {
-  width: 640px;
+  width: 400px;
   background: #fff;
   border-radius: 10px;
   position: relative;
 }
 
-
+.p-r-110 {
+	padding-right: 50px;
+}
+.p-l-110 {
+	padding-left: 50px;
+}
 /*==================================================================
 [ Form ]*/
 

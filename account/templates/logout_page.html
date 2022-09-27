@@ -10,13 +10,14 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <a href="{% url 'register-page' %}" class="btn-face m-b-20">
-    <!-- <i class="fa fa-facebook-official"></i> -->
-    Register
-  </a>
-  <a href="{% url 'login-page' %}" class="btn-google m-b-20">
-    <!-- <img src="{% static 'images/icons/icon-google.png' %}" alt="GOOGLE" /> -->
-    Log In
-  </a>
+  <div class="flex-row p-30">
+    <a href="{% url 'register-page' %}" class="btn-face m-b-20 p-4 m-r-5 ">
+      Register
+    </a>
+    <a href="{% url 'login-page' %}" class="btn-google m-b-20 p-4">
+      Log In
+    </a>
+  </div>
+  
 </div>
 {% endblock content %}

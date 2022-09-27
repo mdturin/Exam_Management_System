@@ -6,19 +6,9 @@
 
 <form class="login100-form validate-form flex-sb flex-w" method="POST" id="login-form">
   {% csrf_token %}
-  <span class="login100-form-title p-b-53">
+  <span class="login100-form-title">
     Sign In
   </span>
-
-  <a href="#" class="btn-face m-b-20">
-    <i class="fa fa-facebook-official"></i>
-    Facebook
-  </a>
-
-  <a href="#" class="btn-google m-b-20">
-    <img src="{% static 'images/icons/icon-google.png' %}" alt="GOOGLE">
-    Google
-  </a>
   {% if form.errors %}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
       Your email and password didn't match. Please try again.
