@@ -143,23 +143,24 @@ def search_teacher(teacher: Teacher, key: str):
 
 
 def get_searched_value(value, key):
-    if isinstance(value, list):
-        new_value = []
-        for v in value:
-            if isinstance(v, Exam):
-                if search_exam(v, key):
-                    new_value.append(v)
-            elif isinstance(v, Course):
-                if search_course(v, key):
-                    new_value.append(v)
-            elif isinstance(v, Teacher):
-                if search_teacher(v, key):
-                    new_value.append(v)
-            elif re.search(key, str(v), re.IGNORECASE):
-                new_value.append(value)
-        return None if len(new_value) == 0 else new_value
+    # if isinstance(value, list):
+    new_value = []
+    for v in value:
+        if isinstance(v, Exam):
+            if search_exam(v, key):
+                new_value.append(v)
+        elif isinstance(v, Course):
+            if search_course(v, key):
+                new_value.append(v)
+        elif isinstance(v, Teacher):
+            if search_teacher(v, key):
+                new_value.append(v)
+        elif re.search(key, str(v), re.IGNORECASE):
+            new_value.append(value)
+    
+    return None if len(new_value) == 0 else new_value
 
-    return None
+    # return None
 
 
 def homepage_search(request):
@@ -172,13 +173,14 @@ def homepage_search(request):
     context['teachers'] = Teacher.objects.all()
     context['departments'] = Department.objects.all()
 
-    print(context['courses'])
+    # print(context['courses'])
 
     data_found = False
     if request.method == 'POST':
         if 'search' in request.POST:
             search = request.POST.get('search', '')
             for key, value in context.items():
+                # print(value, search)
                 new_value = get_searched_value(value, search)
                 if new_value:
                     data_found = True
@@ -190,5 +192,6 @@ def homepage_search(request):
 
     new_context['departments'] = list(departments)
     new_context['data_found'] = data_found
+    # print(new_context)
 
     return render(request, 'homepage-search.html', new_context)
