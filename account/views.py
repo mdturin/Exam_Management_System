@@ -13,10 +13,13 @@ def login_code(request):
     context = {'title': 'Verify User'}
     if request.method == 'POST':
         email = request.POST.get('set-email', '')
+        isStudent = True if re.search("std\..*ac\.bd$", email) else False
         code = request.POST.get('text', '')
         user = User.objects.get(email=email)
         otp_user = OTP.objects.get(user=user)
         if otp_user.code == code:
+            if isStudent:
+                return redirect('student-register')
             return redirect('set-password')
         else:
             messages.warning(request, ("Code didn't match"))
@@ -53,6 +56,32 @@ def set_password(request):
     return render(request, 'set_password.html', context)
 
 
+def student_register_page(request):
+    context = {'title': 'Sign Up'}
+
+    if request.method == 'POST':
+        email = request.POST.get('set-email', '')
+        fname = request.POST.get('fname', '')
+        lname = request.POST.get('lname', '')
+        studentId = request.POST.get('studentId', '')
+        password = request.POST.get('password', '')
+        phoneNumber = request.POST.get('phoneNumber', '')
+
+        user = User.objects.get(email=email)
+        user.first_name = fname
+        user.last_name = lname
+        user.set_password(password)
+        user.save()
+
+        student = Student(user=user, contact_number=phoneNumber,
+                          student_id=phoneNumber)
+        student.save()
+
+        return redirect('login-page')
+
+    return render(request, 'student_register_page.html', context)
+
+
 def register_page(request):
 
     context = {'title': 'Sign Up'}
@@ -60,12 +89,18 @@ def register_page(request):
     if request.method == 'POST':
         email = request.POST.get('email', '')
 
+        if not email.endswith(".ac.bd"):
+            messages.warning(request, (email + ' is invalid!'))
+            return render(request, 'register_page.html', context)
+
         try:
             user = User.objects.get(email=email)
 
         except User.DoesNotExist:
-            messages.warning(request, (email + ' dosent exist'))
-            return render(request, 'register_page.html', context)
+            user = User(email=email, username=email)
+            user.save()
+            # messages.warning(request, (email + ' dosent exist'))
+            # return render(request, 'register_page.html', context)
 
         code = send_code(email)
 
