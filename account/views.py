@@ -64,7 +64,6 @@ def register_page(request):
             user = User.objects.get(email=email)
 
         except User.DoesNotExist:
-            # print(email, 'dosent exist')
             messages.warning(request, (email + ' dosent exist'))
             return render(request, 'register_page.html', context)
 
@@ -157,7 +156,7 @@ def get_searched_value(value, key):
                 new_value.append(v)
         elif re.search(key, str(v), re.IGNORECASE):
             new_value.append(value)
-    
+
     return None if len(new_value) == 0 else new_value
 
     # return None

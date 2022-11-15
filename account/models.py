@@ -17,6 +17,16 @@ def get_profile_pictures_directory(self: 'Teacher', filename: str):
     return f'img/pp/{self.user_id}_{filename}'
 
 
+class Student(models.Model):
+
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, primary_key=True)
+
+    contact_number = models.CharField(null=False, unique=True, max_length=255)
+
+    student_id = models.CharField(null=False, unique=True, max_length=255)
+
+
 class Teacher(models.Model):
 
     user = models.OneToOneField(
