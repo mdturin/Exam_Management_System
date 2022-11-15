@@ -26,6 +26,9 @@ class Student(models.Model):
 
     student_id = models.CharField(null=False, unique=True, max_length=255)
 
+    department = models.ForeignKey(
+        Department, on_delete=models.DO_NOTHING)
+
 
 class Teacher(models.Model):
 

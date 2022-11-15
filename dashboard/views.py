@@ -47,6 +47,14 @@ def is_teacher(user):
     return teacher
 
 
+def is_student(user):
+    try:
+        student = Student.objects.get(user=user)
+    except Student.DoesNotExist:
+        return None
+    return student
+
+
 def get_staff(faculty):
     return list(Staff.objects.filter(faculty=faculty))
 
@@ -111,6 +119,7 @@ def get_context(request, full_routine=False):
     dean = is_dean(user)
     staff = is_staff(user)
     teacher = is_teacher(user)
+    student = is_student(user)
 
     if staff:
         faculty_name = staff.faculty
@@ -118,6 +127,9 @@ def get_context(request, full_routine=False):
         faculty_name = dean.faculty
     elif teacher:
         department = Department.objects.get(name=teacher.department)
+        faculty_name = department.faculty.name
+    elif student:
+        department = Department.objects.get(name=student.department)
         faculty_name = department.faculty.name
 
     faculty = Faculty.objects.get(name=faculty_name)
