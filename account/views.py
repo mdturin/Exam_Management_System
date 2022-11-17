@@ -64,6 +64,7 @@ def student_register_page(request):
         fname = request.POST.get('fname', '')
         lname = request.POST.get('lname', '')
         studentId = request.POST.get('studentId', '')
+        department = request.POST.get('department', '')
         password = request.POST.get('password', '')
         phoneNumber = request.POST.get('phoneNumber', '')
 
@@ -74,7 +75,7 @@ def student_register_page(request):
         user.save()
 
         student = Student(user=user, contact_number=phoneNumber,
-                          student_id=phoneNumber)
+                          student_id=studentId, department_id = department)
         student.save()
 
         return redirect('login-page')

@@ -167,6 +167,7 @@ def get_context(request, full_routine=False):
             start_date__year=year).all()
 
     elif not full_routine:
+        print("Here 3")
         context['faculty'] = faculty
         approved_routines = Routine.objects.filter(is_approved=True).filter(
             department__in=faculty.department_set.all()).all()
@@ -175,6 +176,10 @@ def get_context(request, full_routine=False):
         context['past_exams'] = past
         context['upcomming_exams'] = upcomming
         context['approved_routines'] = approved_routines
+    
+    if student:
+        context['is_student'] = student is not None,
+        context['student'] = Student.objects.get(user=user)
 
     return context
 

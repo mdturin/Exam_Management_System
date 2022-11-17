@@ -61,13 +61,19 @@
               </div>
               <div class="profile-name">
                 <h5 class="mb-0 font-weight-normal">
-                  {{ user.user.first_name }} {{ user.user.last_name }}
+                  {% if is_student %}
+                    {{ student.user.first_name }} {{ student.user.last_name }}
+                  {% else %}
+                    {{ user.user.first_name }} {{ user.user.last_name }}
+                  {% endif %}
                 </h5>
                 <span>
                   {% if if_staff %}
                   Staff
                   {% elif if_dean %}
                   Dean
+                  {% elif is_student %}
+                  Student
                   {% else %}
                   Teacher
                   {% endif %}
@@ -87,54 +93,55 @@
             <span class="menu-title">Dashboard</span>
           </a>
         </li>
-
-        {% if is_staff %}
-        <li class="nav-item menu-items">
-          <a class="nav-link" href="{% url 'teacher-section' %}">
-            <span class="menu-icon">
-              <i class="mdi mdi-playlist-play"></i>
-            </span>
-            <span class="menu-title">Teacher Section</span>
-          </a>
-        </li>
-        {% if if_dean %}
-        <li class="nav-item menu-items">
-          <a class="nav-link" href="{% url 'staff-section' %}">
-            <span class="menu-icon">
-              <i class="mdi mdi-table-large"></i>
-            </span>
-            <span class="menu-title">Staff Section</span>
-          </a>
-        </li>
-        {% endif %}
-        <li class="nav-item menu-items">
-          <a class="nav-link" href="{% url 'course-section' %}">
-            <span class="menu-icon">
-              <i class="mdi mdi-chart-bar"></i>
-            </span>
-            <span class="menu-title">Course Section</span>
-          </a>
-        </li>
-        {% endif %}
-        {% if not is_staff %}
-        <li class="nav-item menu-items">
-          <a class="nav-link" href="{% url 'routine-section' %}">
-            <span class="menu-icon">
-              <i class="mdi mdi-chart-bar"></i>
-            </span>
-            <span class="menu-title">Routine Section</span>
-          </a>
-        </li>
-        {% endif %}
-        {% if is_staff %}
-        <li class="nav-item menu-items">
-          <a class="nav-link" href="{% url 'event-section' %}">
-            <span class="menu-icon">
-              <i class="mdi mdi-chart-bar"></i>
-            </span>
-            <span class="menu-title">Event Section</span>
-          </a>
-        </li>
+        {% if not is_student %}
+          {% if is_staff %}
+            <li class="nav-item menu-items">
+              <a class="nav-link" href="{% url 'teacher-section' %}">
+                <span class="menu-icon">
+                  <i class="mdi mdi-playlist-play"></i>
+                </span>
+                <span class="menu-title">Teacher Section</span>
+              </a>
+            </li>
+            {% if if_dean %}
+              <li class="nav-item menu-items">
+                <a class="nav-link" href="{% url 'staff-section' %}">
+                  <span class="menu-icon">
+                    <i class="mdi mdi-table-large"></i>
+                  </span>
+                  <span class="menu-title">Staff Section</span>
+                </a>
+              </li>
+            {% endif %}
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'course-section' %}">
+              <span class="menu-icon">
+                <i class="mdi mdi-chart-bar"></i>
+              </span>
+              <span class="menu-title">Course Section</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if not is_staff %}
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'routine-section' %}">
+              <span class="menu-icon">
+                <i class="mdi mdi-chart-bar"></i>
+              </span>
+              <span class="menu-title">Routine Section</span>
+            </a>
+          </li>
+          {% endif %}
+          {% if is_staff %}
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'event-section' %}">
+              <span class="menu-icon">
+                <i class="mdi mdi-chart-bar"></i>
+              </span>
+              <span class="menu-title">Event Section</span>
+            </a>
+          </li>
+          {% endif %}
         {% endif %}
       </ul>
     </nav>

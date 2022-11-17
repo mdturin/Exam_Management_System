@@ -3,6 +3,45 @@
 {% block content %}
 
 <h1>Dashboard</h1>
+{% if is_student %}
+<!-- Routines -->
+<div class="row">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Routines</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th> Routine Name </th>
+                <th> Department Name </th>
+                <th> Start Date </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for routine in approved_routines %}
+              <tr>
+                <td> {{routine.name}} </td>
+                <td> {{routine.department}} </td>
+                <td> {{routine.start_date}} </td>
+                <td>
+                  <a class="btn btn-primary" href="{% url 'routine-view' routine.id  %}">View</a>
+                </td>
+                <td>
+                  <a class="btn btn-success" href="{% url 'download-routine' routine.name %}">Download</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+
 
 {% if is_staff %}
 <div class="create-new">
@@ -213,7 +252,11 @@
                   {% endfor %}
                 </td>
                 <td>
+                  {% if is_student%}
+                  <a class="btn btn-success" href="{% url 'download-routine'  exam.routine.name %}">Download Routine</a>
+                  {% else %}
                   <a class="btn btn-success" href="{% url 'download-roaster' exam.routine.name %}">Download Roaster</a>
+                  {% endif %}
                 </td>
               </tr>
               {% endfor %}
@@ -227,4 +270,6 @@
 {% endif %}
 
 {% endif %}
+{% endif %}
+
 {% endblock content %}

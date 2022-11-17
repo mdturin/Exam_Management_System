@@ -33,7 +33,9 @@
           </table>
           <hr>
           <a class="btn btn-success" href="{% url 'download-routine' routine_name %}">Download Routine</a>
+          {% if not is_student %}
           <a class="btn btn-success" href="{% url 'download-roaster' routine_name %}">Download Duty Roaster</a>
+          {% endif %}
         </div>
       </div>
     </div>
