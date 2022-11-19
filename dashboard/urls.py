@@ -37,6 +37,8 @@ urlpatterns = [
     path('notification/<int:pk>', marked_notification, name='marked-notification'),
     path('download/routine/<str:name>',
          download_routine, name='download-routine'),
+    path('download/admit/<str:name>',
+         download_admit, name='download-admit'),
     path('download/roaster/<str:name>',
          download_roaster, name='download-roaster'),
     path('search', search_page, name='search-page'),

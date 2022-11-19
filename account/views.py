@@ -75,7 +75,7 @@ def student_register_page(request):
         user.save()
 
         student = Student(user=user, contact_number=phoneNumber,
-                          student_id=studentId, department_id = department)
+                          student_id=studentId, department_id=department)
         student.save()
 
         return redirect('login-page')

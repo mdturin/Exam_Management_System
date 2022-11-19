@@ -16,6 +16,7 @@ from dashboard.models import *
 from dashboard.routine_creator import *
 from dashboard.routine_downloader import *
 from dashboard.roaster_downloader import *
+from dashboard.admit_downloader import downloader as admit_downloader
 
 
 def is_dean(user):
@@ -176,7 +177,7 @@ def get_context(request, full_routine=False):
         context['past_exams'] = past
         context['upcomming_exams'] = upcomming
         context['approved_routines'] = approved_routines
-    
+
     if student:
         context['is_student'] = student is not None,
         context['student'] = Student.objects.get(user=user)
@@ -619,6 +620,27 @@ def download_routine(request, name):
 
     base_dir = settings.BASE_DIR
     file = os.path.join(base_dir, 'Sample/output.pdf')
+    chunk_size = 8192
+
+    f = FileWrapper(open(file, 'rb'), chunk_size)
+    response = StreamingHttpResponse(
+        f, content_type=mimetypes.guess_type(file)[0])
+    response['Content-Length'] = os.path.getsize(file)
+    response['Content-Disposition'] = "Attachment;filename=%s" % name
+
+    return response
+
+
+def download_admit(request, name):
+    routine = Routine.objects.get(name=name)
+    student = is_student(request.user)
+    if student == None:
+        redirect("dashboard-page")
+
+    admit_downloader(routine, student)
+
+    base_dir = settings.BASE_DIR
+    file = os.path.join(base_dir, 'Sample/Admit.pdf')
     chunk_size = 8192
 
     f = FileWrapper(open(file, 'rb'), chunk_size)

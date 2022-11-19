@@ -29,6 +29,10 @@ class Student(models.Model):
     department = models.ForeignKey(
         Department, on_delete=models.DO_NOTHING)
 
+    @property
+    def get_name(self):
+        return self.user.first_name + " " + self.user.last_name
+
 
 class Teacher(models.Model):
 
@@ -104,6 +108,8 @@ class Routine(models.Model):
     name = models.CharField(max_length=255, null=False, unique=True)
 
     start_date = models.DateField()
+
+    session = models.IntegerField()
 
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
 

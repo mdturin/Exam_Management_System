@@ -25,6 +25,11 @@
                 <td> {{routine.name}} </td>
                 <td> {{routine.department}} </td>
                 <td> {{routine.start_date}} </td>
+                {% if is_student %}
+                <td>
+                  <a class="btn btn-primary" href="{% url 'download-admit' routine.name  %}">Admit</a>
+                </td>
+                {% endif %}
                 <td>
                   <a class="btn btn-primary" href="{% url 'routine-view' routine.id  %}">View</a>
                 </td>
