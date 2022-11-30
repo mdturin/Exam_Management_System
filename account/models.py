@@ -109,7 +109,7 @@ class Routine(models.Model):
 
     start_date = models.DateField()
 
-    session = models.IntegerField()
+    session = models.IntegerField(null=True)
 
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
