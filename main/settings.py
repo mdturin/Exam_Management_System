@@ -152,7 +152,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'matkhan01@gmail.com'
-EMAIL_HOST_PASSWORD = 'CD2D$r5Emhc5Yv7'
+EMAIL_HOST_PASSWORD = 'Your-Password'
 RECIPIENT_ADDRESS = 'example@mail.com'
 
 
