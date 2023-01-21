@@ -148,14 +148,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/user/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-
-# Custom setting. To email
-RECIPIENT_ADDRESS = env('RECIPIENT_ADDRESS')
+EMAIL_HOST_USER = 'matkhan01@gmail.com'
+EMAIL_HOST_PASSWORD = 'CD2D$r5Emhc5Yv7'
+RECIPIENT_ADDRESS = 'example@mail.com'
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
