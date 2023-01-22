@@ -18,7 +18,7 @@ def get_data(exams: Exam):
     exams_data = []
     for exam in exams:
         data = []
-        t = exam.exam_time.strftime("%I:%M %P")
+        t = exam.exam_time.strftime("%I:%M %p")
         data.append(str(exam.exam_date) + "\n" + t)
         data.append(exam.course.code)
         data.append(exam.supervisor.get_name)
